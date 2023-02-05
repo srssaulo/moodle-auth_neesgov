@@ -44,16 +44,7 @@ if (!$issuer->is_available_for_login()) {
 $returnparams = ['wantsurl' => $wantsurl, 'sesskey' => sesskey()];
 $returnurl = new moodle_url('/auth/neesgov/login.php', $returnparams);
 
-$client = \core\oauth2\api::get_user_oauth_client($issuer, $returnurl);//TODO criar auth client
+//$client = \core\oauth2\api::get_user_oauth_client($issuer, $returnurl);//TODO criar auth client
+$client = new auth_neesgov\httpclient();
 
-if ($client) {
-    if (!$client->is_logged_in()) {
-        redirect($client->get_login_url());
-    }
-
-    $auth = new \auth_oauth2\auth();
-    $auth->complete_login($client, $wantsurl);
-} else {
-    throw new moodle_exception('Could not get an OAuth client.');
-}
-
+$client->handleRedirect();

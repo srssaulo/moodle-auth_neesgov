@@ -33,11 +33,36 @@ require_once($CFG->libdir.'/authlib.php');
 class auth extends \auth_plugin_base
 {
 
+//    /**
+//      Exemplo de como lidar com token gerado no neesgov
+//     * This is the primary method that is used by the authenticate_user_login() function in moodlelib.php.
+//     *
+//     * @param string $username The username (with system magic quotes)
+//     * @param string $password The password (with system magic quotes)
+//     * @return bool Authentication success or failure.
+//     */
+//    public function user_login($username, $password = null) {
+//        global $CFG, $DB;
+//
+//        // Check user exists.
+//        $userfilters = ['username' => $username, 'mnethostid' => $CFG->mnet_localhost_id, 'auth' => 'oidc'];
+//        $userexists = $DB->record_exists('user', $userfilters);
+//
+//        // Check token exists.
+//        $tokenrec = $DB->get_record('auth_oidc_token', ['username' => $username]);
+//        $code = optional_param('code', null, PARAM_RAW);
+//        $tokenvalid = (!empty($tokenrec) && !empty($code) && $tokenrec->authcode === $code) ? true : false;
+//        return ($userexists === true && $tokenvalid === true) ? true : false;
+//    }
+//
+
     public function loginpage_idp_list($wantsurl)
     {
+        $params = [];
+
         return [
           [
-              'url'=>new moodle_url('/auth/neesgov/login.php'),
+              'url'=>new \moodle_url('/auth/neesgov/login.php', $params),
               'icon'=>new pix_icon('neesgov', 'logar com gov.br', 'auth_neesgov'),
               'name'=>format_text('Logar com o GOV.BR'),
           ]

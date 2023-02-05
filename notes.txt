@@ -3,3 +3,25 @@ https://docs.moodle.org/dev/Authentication_plugins
 
 Moodle oidc
 https://moodle.org/plugins/auth_oidc
+
+
+//private key oly the server should knows
+jwt.login({payloadobject}, privatekey, {expiresIn: '1h'});
+
+claims - attr dos objetos
+payload - possuem attrs privados e públicos Ex: sub: email da pessoa, iss: 'aplicacao'
+Header e Boy codificados em base64
+
+
+funções úteis:
+base64_encode
+hash_hmac('sha256', txt)
+
+Fluxo:
+usuário manda os dados para autenticaçã0
+
+
+
+ATENÇÃO
+Analisar bem o fluxo do handleredirect. Lá é verificado oq fazer:
+    - handlecertadminconsentresponse // lida com session do moodle e post request token access. registro de envento qd o usuário pega um token
