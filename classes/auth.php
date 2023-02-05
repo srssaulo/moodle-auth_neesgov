@@ -58,7 +58,7 @@ class auth extends \auth_plugin_base
 
     public function loginpage_idp_list($wantsurl)
     {
-        $params = [];
+        $params = ['sesskey' => sesskey()];
 
         return [
           [
