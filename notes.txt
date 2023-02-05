@@ -1,0 +1,5 @@
+Moodle auth plugin docs:
+https://docs.moodle.org/dev/Authentication_plugins
+
+Moodle oidc
+https://moodle.org/plugins/auth_oidc
