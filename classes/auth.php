@@ -56,6 +56,27 @@ class auth extends \auth_plugin_base
 //    }
 //
 
+    /**
+     * Returns true if this authentication plugin is "internal".
+     *
+     * @return bool Whether the plugin uses password hashes from Moodle user table for authentication.
+     */
+    public function is_internal() {
+        return false;
+    }
+
+
+    /**
+     * Indicates if moodle should automatically update internal user
+     * records with data from external sources using the information
+     * from get_userinfo() method.
+     *
+     * @return bool true means automatically copy data from ext to user table
+     */
+    public function is_synchronised_with_external() {
+        return true;
+    }
+
     public function loginpage_idp_list($wantsurl)
     {
         $params = ['sesskey' => sesskey()];

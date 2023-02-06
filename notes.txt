@@ -21,7 +21,14 @@ Fluxo:
 usuário manda os dados para autenticaçã0
 
 
+$user = authenticate_user_login($username, null, true);
+
+Documentação para autenticação:
+https://docs.google.com/document/d/1H7Pe8uPqeaIrsB-YU5NAqjWHSRhVYCD-Du3ammGyXcM/edit
+
 
 ATENÇÃO
 Analisar bem o fluxo do handleredirect. Lá é verificado oq fazer:
     - handlecertadminconsentresponse // lida com session do moodle e post request token access. registro de envento qd o usuário pega um token
+
+

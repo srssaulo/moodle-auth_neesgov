@@ -32,6 +32,9 @@ class httpclient extends \curl
 
 
     public function handleRedirect(){
+        global $CFG, $SESSION;
+
+
 
         $redirecturl = new \moodle_url('/', []);
         redirect($redirecturl);
