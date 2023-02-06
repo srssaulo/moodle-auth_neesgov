@@ -36,7 +36,10 @@ class httpclient extends \curl
 
 
 
-        $redirecturl = new \moodle_url('/', []);
+//        $redirecturl = new \moodle_url('/', []);
+        $redirecturl = 'https://develop-login-integracao-dot-scanner-prova.rj.r.appspot.com/login';
+//        $redirecturl = 'https://localhostcomtoken';
+
         redirect($redirecturl);
     }
 
