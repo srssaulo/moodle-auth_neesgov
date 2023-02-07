@@ -52,7 +52,7 @@ Validar o token do usuário:
 
 HEADER:
 "Content-Type": "application/json",
-            "Authorization": "Bearer " + access_token,
+"Authorization": "Bearer " + access_token,
 "id-profile": user_profile
 
 //valor da constante passada por Lucas:

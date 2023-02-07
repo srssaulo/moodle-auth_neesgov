@@ -30,17 +30,25 @@ require_once($CFG->dirroot . '/lib/filelib.php');
 class httpclient extends \curl
 {
 
-
-    public function handleRedirect(){
-        global $CFG, $SESSION;
+    const RBEH_REPO_MODULE_ID = 11;
 
 
+    /**
+     * @param \stdClass $params atts: accesstoken, userProfile
+     * @return void
+     */
+    public function getUserCPF($params){
 
-//        $redirecturl = new \moodle_url('/', []);
-        $redirecturl = 'https://develop-login-integracao-dot-scanner-prova.rj.r.appspot.com/login';
-//        $redirecturl = 'https://localhostcomtoken';
+        //now using url test. TODO set in config/settings
+        $url = "https://develop-api-login-integracao-dot-scanner-prova.rj.r.appspot.com/govbr/user/info/".self::RBEH_REPO_MODULE_ID;
 
-        redirect($redirecturl);
+        $this->setHeader([
+            "Content-Type"=>"application/json",
+            "Authorization"=>"Bearer ".$params->accesstoken,
+            "id-profile"=>$params->userProfile
+        ]);
+
+        return @json_decode($this->post($url));
     }
 
 

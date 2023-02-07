@@ -33,6 +33,9 @@ require_once($CFG->libdir.'/authlib.php');
 class auth extends \auth_plugin_base
 {
 
+    public $authtype = 'neesgov';
+
+
 //    /**
 //      Exemplo de como lidar com token gerado no neesgov
 //     * This is the primary method that is used by the authenticate_user_login() function in moodlelib.php.
@@ -55,6 +58,7 @@ class auth extends \auth_plugin_base
 //        return ($userexists === true && $tokenvalid === true) ? true : false;
 //    }
 //
+
 
     /**
      * Returns true if this authentication plugin is "internal".
