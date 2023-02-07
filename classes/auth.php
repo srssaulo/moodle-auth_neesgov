@@ -108,7 +108,9 @@ class auth extends \auth_plugin_base
         if (!empty($CFG->guestloginbutton) && $username === 'guest' && $password === 'guest') {
             return false;
         }
-        return true;
+
+
+
     }
 
 }

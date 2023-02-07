@@ -32,7 +32,7 @@ $PAGE->set_context(context_system::instance());
 //$PAGE->set_url(new moodle_url('/auth/neesgov/login.php', ['id' => $issuerid]));
 $PAGE->set_url(new moodle_url('/auth/neesgov/login.php'));
 $PAGE->set_pagelayout('popup');
-require_sesskey();
+//require_sesskey(); //TODO reactivate
 
 
 //$issuer = new \core\oauth2\issuer($issuerid); //delete
@@ -44,6 +44,6 @@ $returnparams = ['wantsurl' => $wantsurl, 'sesskey' => sesskey()];
 $returnurl = new moodle_url('/auth/neesgov/login.php', $returnparams); //provável que não seja necessário
 
 //$client = \core\oauth2\api::get_user_oauth_client($issuer, $returnurl);//TODO criar auth client
-$neesflow = new auth_neesgov\neesflow();
+$neesflow = new \auth_neesgov\neesflow();
 
 $neesflow->handleRedirect();
