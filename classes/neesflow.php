@@ -78,6 +78,9 @@ class neesflow
             //TODO token validation. HTTP REQUEST
             $this->handlelogin();
 
+            //its all right and user is redirected to dashboardo Moodle
+            redirect(new \moodle_url('/my'));
+
             $dev_redirect_tests = new \moodle_url("http://localhost:8080/auth/neesgov/login.php", (array)$this->params);
 //            redirect($dev_redirect_tests);
         }else{

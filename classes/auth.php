@@ -24,12 +24,14 @@
 
 namespace auth_neesgov;
 
+use core_analytics\user;
 use pix_icon;
 
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir.'/authlib.php');
 
+use auth_neesgov\neesflow;
 class auth extends \auth_plugin_base
 {
 
@@ -103,13 +105,15 @@ class auth extends \auth_plugin_base
      */
     public function user_login($username, $password)
     {
-        global $CFG;
+        global $CFG, $DB;
         // Short circuit for guest user.
         if (!empty($CFG->guestloginbutton) && $username === 'guest' && $password === 'guest') {
             return false;
         }
 
+        $neesflow = new neesflow();
 
+        return $DB->record_exists('user', ['username'=>$username]);
 
     }
 
