@@ -45,7 +45,7 @@ class httpclient extends \curl
 
         $this->setHeader([
             "Content-Type: application/json",
-            "Authorization: Bearer " . $params->accesstoken,
+            "Authorization: Bearer " . $params->accessToken,
             "id-profile: ".$params->userProfile
         ]);
 
