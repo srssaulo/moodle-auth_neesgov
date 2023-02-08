@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="auth/neesgov/db" VERSION="20170323" COMMENT="XMLDB file for Moodle auth/neesgov"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
->
-
-</XMLDB>
