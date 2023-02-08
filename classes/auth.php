@@ -112,8 +112,12 @@ class auth extends \auth_plugin_base
         }
 
         $neesflow = new neesflow();
+        $userNees = $neesflow->handleGetUserNeesDataResults();//TODO we need test
 
-        return $DB->record_exists('user', ['username'=>$username]);
+        if($userNees->cpf && $DB->record_exists('user', ['username'=>$username])){
+            return true;
+        }
+        return false;
 
     }
 

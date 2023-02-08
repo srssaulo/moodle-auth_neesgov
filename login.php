@@ -35,15 +35,9 @@ $PAGE->set_pagelayout('popup');
 //require_sesskey(); //TODO reactivate
 
 
-//$issuer = new \core\oauth2\issuer($issuerid); //delete
-//if (!$issuer->is_available_for_login()) {
-//    throw new \moodle_exception('issuernologin', 'auth_oauth2');
-//}
-
 $returnparams = ['wantsurl' => $wantsurl, 'sesskey' => sesskey()];
 $returnurl = new moodle_url('/auth/neesgov/login.php', $returnparams); //provável que não seja necessário
 
-//$client = \core\oauth2\api::get_user_oauth_client($issuer, $returnurl);//TODO criar auth client
 $neesflow = new \auth_neesgov\neesflow();
 
 $neesflow->handleRedirect();
