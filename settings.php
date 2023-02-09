@@ -27,11 +27,19 @@ defined('MOODLE_INTERNAL') || die;
 if ($ADMIN->fulltree) {
 
     // Introductory explanation.
-    $settings->add(new admin_setting_heading('auth_none/pluginname', '',
-        new lang_string('auth_nonedescription', 'auth_neesgov')));
+    $settings->add(new admin_setting_heading('auth_neesgov/pluginname', '',
+        get_string('generaldesc', 'auth_neesgov')));
 
     // Display locking / mapping of profile fields.
-    $authplugin = get_auth_plugin('none');
-    display_auth_lock_options($settings, $authplugin->authtype, $authplugin->userfields,
-        get_string('auth_fieldlocks_help', 'auth'), false, false);
+//    $authplugin = get_auth_plugin('none');
+//    display_auth_lock_options($settings, $authplugin->authtype, $authplugin->userfields,
+//        get_string('auth_fieldlocks_help', 'auth'), false, false);
+
+    $settings->add(new admin_setting_configtext('auth_neesgov/neesmodid',
+       get_string('moduleid', 'auth_neesgov'),  get_string('moduleid_desc', 'auth_neesgov'), '' , PARAM_INT));
+
+    $settings->add(new admin_setting_configtext('auth_neesgov/redirecturl',
+       get_string('redirecturl', 'auth_neesgov'),  get_string('redirecturl_desc', 'auth_neesgov'), 'https://develop-login-integracao-dot-scanner-prova.rj.r.appspot.com/login' , PARAM_URL));
+
+
 }

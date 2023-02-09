@@ -30,18 +30,16 @@ require_once($CFG->dirroot . '/lib/filelib.php');
 class httpclient extends \curl
 {
 
-    const RBEH_REPO_MODULE_ID = 11;
-
-
     /**
      * @param \stdClass $params atts: accesstoken, userProfile
      * @return void
      */
     public function getUserNeesData($params)
     {
+        $RBEH_REPO_MODULE_ID = get_config('auth_neesgov', 'neesmodid');
 
         //now using url test. TODO set in config/settings
-        $url = "https://develop-api-login-integracao-dot-scanner-prova.rj.r.appspot.com/govbr/user/info/" . self::RBEH_REPO_MODULE_ID;
+        $url = "https://develop-api-login-integracao-dot-scanner-prova.rj.r.appspot.com/govbr/user/info/" . $RBEH_REPO_MODULE_ID;
 
         $this->setHeader([
             "Content-Type: application/json",

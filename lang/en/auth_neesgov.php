@@ -26,4 +26,9 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Nees GOVBR';
 $string['auth_neesgovdescription'] = 'Nees Gov Br connect plugin';
+$string['generaldesc'] = 'Nees GOVBR auth general config vars';
+$string['moduleid'] = 'Nees module id';
+$string['moduleid_desc'] = 'Nees app repository module id';
+$string['redirecturl'] = 'NEES/GOVBR url';
+$string['redirecturl_desc'] = 'NEES/GOVBR first url redirect (login starts here). Default is a developer url';
 $string['opname'] = 'Login with nees gov.br';

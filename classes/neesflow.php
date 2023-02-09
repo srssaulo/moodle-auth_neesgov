@@ -33,9 +33,6 @@ class neesflow
         return $userNees;
     }
 
-
-
-
     /**
      * @param \stdClass $params atts: accesstoken, userProfile
      * @return void
@@ -56,13 +53,10 @@ class neesflow
             throw new \moodle_exception('User doesn\'t created in moodle', 'auth_neesgov');
         }
 
-
-
         if($mdlUser->auth!='neesgov'){//change user auth type to neesgov
             $mdlUser->auth = 'neesgov';
             $DB->update_record('user', $mdlUser);
         }
-
 
         $user = authenticate_user_login($mdlUser->username, null, true);
         if (!empty($user)) {
@@ -81,14 +75,18 @@ class neesflow
 
     public function handleRedirect(){
 
-        //TODO deve ser colocado no settings do plugin
-        $dev_login_redirect = new \moodle_url("https://develop-login-integracao-dot-scanner-prova.rj.r.appspot.com/login");
+        $redirect_url = trim(get_config('auth_neesgov', 'redirecturl'));
 
-        //URL de testes direto para autenticar. accesstoken e userProfile
-        //Este link deve ser enviado de volta (callback) para esta url do plugin com os atributos accesstoken e userProfile
+        if(!empty($redirect_url)){
+            $dev_login_redirect = new \moodle_url($redirect_url);
+        }else{
+            $dev_login_redirect = new \moodle_url("https://develop-login-integracao-dot-scanner-prova.rj.r.appspot.com/login");
+        }
+
+
         $this->params = $this->getTokenAndUserProfile();
         if(!is_null($this->params->accessToken) and  $this->params->userProfile!==0) {
-            //TODO token validation. HTTP REQUEST
+
             $this->handlelogin();
 
             //its all right and user is redirected to dashboardo Moodle
