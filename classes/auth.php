@@ -29,9 +29,10 @@ use pix_icon;
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->libdir.'/authlib.php');
+require_once($CFG->libdir . '/authlib.php');
 
 use auth_neesgov\neesflow;
+
 class auth extends \auth_plugin_base
 {
 
@@ -67,7 +68,8 @@ class auth extends \auth_plugin_base
      *
      * @return bool Whether the plugin uses password hashes from Moodle user table for authentication.
      */
-    public function is_internal() {
+    public function is_internal()
+    {
         return false;
     }
 
@@ -79,7 +81,8 @@ class auth extends \auth_plugin_base
      *
      * @return bool true means automatically copy data from ext to user table
      */
-    public function is_synchronised_with_external() {
+    public function is_synchronised_with_external()
+    {
         return true;
     }
 
@@ -90,7 +93,7 @@ class auth extends \auth_plugin_base
         return [
           [
               'url'=>new \moodle_url('/auth/neesgov/login.php', $params),
-              'icon'=>new pix_icon('neesgov', get_string('pluginname', 'auth_oidc'), 'auth_neesgov'),
+              'icon'=>new pix_icon('neesgov', get_string('pluginname', 'auth_neesgov'), 'auth_neesgov'),
               'name'=>strip_tags(format_text('Logar com o GOV.BR')),
           ]
         ];
@@ -114,7 +117,7 @@ class auth extends \auth_plugin_base
         $neesflow = new neesflow();
         $userNees = $neesflow->handleGetUserNeesDataResults();//TODO we need test
 
-        if($userNees->cpf && $DB->record_exists('user', ['username'=>$username])){
+        if ($userNees->cpf && $DB->record_exists('user', ['username' => $username])) {
             return true;
         }
         return false;
