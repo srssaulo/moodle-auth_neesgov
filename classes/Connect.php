@@ -25,19 +25,41 @@ class Connect
     private static string $CODE_CHALLENGE;
     private const CODE_CHALLENGE_METHOD = "S256";
 
+    private static string $STATE;
+
 
     public function __construct()
     {
-        self:self::setCodeChallange();
+       self::setCodeChallange();
+       self::setState();//optional
+    }
+
+
+    private static function setState(){
+        self::$STATE = Utils::get_state();
     }
 
     private static function setCodeChallange(){
         self::$CODE_CHALLENGE = Utils::code_challange();
     }
 
+    /**
+     * get code challange value
+     * @return string
+     */
     public function getCodeChallange(){
         return self::$CODE_CHALLENGE;
     }
+
+    /**
+     * valid state moodle value
+     * @return string
+     */
+    public function getState(){
+        return self::$STATE;
+    }
+
+
 
 
 
