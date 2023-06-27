@@ -29,6 +29,10 @@ class Utils
         return \core\session\manager::validate_login_token($state);
     }
 
+    public static function get_redirect_uri(){
+
+    }
+
 
     private static function base64url_encode($plainText){
         $base64 = base64_encode($plainText);

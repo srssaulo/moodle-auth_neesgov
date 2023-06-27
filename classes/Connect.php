@@ -27,11 +27,19 @@ class Connect
 
     private static string $STATE;
 
+    private string $uriAuthRequest;
+
 
     public function __construct()
     {
        self::setCodeChallange();
        self::setState();//optional
+    }
+
+
+    public function getUriAuthRequest(){
+
+
     }
 
 
