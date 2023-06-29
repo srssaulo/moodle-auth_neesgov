@@ -60,7 +60,11 @@ class Connect
 
 
         $oidc->authenticate(); //aqui eu pego o code
-//        $sub = $oidc->getVerifiedClaims('sub');
+
+        $oidc->requestUserInfo('sub');
+
+        print_object($oidc->requestUserInfo('sub'));
+        print_object($oidc->getVerifiedClaims('sub'));
 
 
 //        print_object($sub);
