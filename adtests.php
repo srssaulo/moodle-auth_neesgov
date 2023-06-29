@@ -1,5 +1,6 @@
 <?php
 require "../../config.php";
+require  $CFG->dirroot.'/auth/neesgov/classes/Connect.php'; //TODO put in general place
 
 use auth_neesgov\Connect;
 
