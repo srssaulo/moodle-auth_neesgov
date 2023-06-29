@@ -1,0 +1,78 @@
+<?php
+
+namespace auth_neesgov;
+
+use Jumbojett\OpenIDConnectClient;
+
+require  $CFG->dirroot.'/auth/neesgov/vendor/autoload.php'; //TODO put in general place
+
+/**
+ * Implements 3 steps Gov.br authorization service.
+ * Class was implemented based in following sample:
+ * <https://manual-roteiro-integracao-login-unico.servicos.gov.br/pt/stable/arquivos/ExemploIntegracaoGovBr.java>
+ * Steps docs:
+ * <https://manual-roteiro-integracao-login-unico.servicos.gov.br/pt/stable/iniciarintegracao.html
+ *
+ * @author Saulo de Sá <srssaulo@gmail.com>
+ */
+class Connect
+{
+
+    private const URL_PROVIDER = "https://sso.staging.acesso.gov.br";
+
+    private const RESPONSE_TYPE = 'code';
+    private const URL_SERVICOS = "https://api.staging.acesso.gov.br";
+    private const URL_CATALOGO_SELOS = "https://confiabilidades.staging.acesso.gov.br";
+    private const REDIRECT_URI = "https://rieh-hmg.nees.ufal.br/auth/neesgov/login.php"; // redirectURI informada na chamada do serviço do
+    private const SCOPES = "openid+profile+(phone/email)+govbr_empresa"; // Escopos openid+email+profile+govbr_empresa+govbr_confiabilidades
+    private const CLIENT_ID = "ava.rieh-hmg.nees.ufal.br"; // clientId informado na chamada do serviço do authorize. //TODO deve ser uma conf do plugin
+    private const CLIENT_SECRET = "eGU6QS89-hs_HPTI3_5atFzN-4WlMU9xN21AYAhS2DzmIhOeyKF-SfI6RjHIaGbNliaYJ73U92KnsuEbVw0WhQ"; //TODO deve ser uma conf do plugin
+
+    private const CODE_CHALLENGE_METHOD = "S256";
+
+
+    public function __construct()
+    {
+
+    }
+
+
+    /**
+     * Authenticate method using OpenId Connect Client
+     * @return void
+     */
+    public function OpenIDAuthenticate(){
+        $oidc = new OpenIDConnectClient(
+            self::URL_PROVIDER,
+            self::CLIENT_ID,
+            self::CLIENT_SECRET
+        );
+
+
+        $oidc->setResponseTypes(self::RESPONSE_TYPE);
+
+        $oidc->addScope(self::SCOPES);
+
+
+//        $oidc->setRedirectURL(self::REDIRECT_URI); //if not was set, return to origin
+
+        $oidc->setCodeChallengeMethod(self::CODE_CHALLENGE_METHOD);
+
+
+        $oidc->authenticate(); //aqui eu pego o code
+//        $sub = $oidc->getVerifiedClaims('sub');
+
+
+//        print_object($sub);
+        //aqui o access token
+//       echo  $oidc->requestClientCredentialsToken()->access_token;
+//        echo $oidc->requestClientCredentialsToken();
+//       echo  $oidc->getProviderURL();
+//       echo $oidc->getResponseCode();
+//        $oidc->authenticate();
+
+
+    }
+
+
+}

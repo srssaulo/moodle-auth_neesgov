@@ -46,6 +46,8 @@ class neesflow
             throw new moodle_exception('erroroidcnotenabled', 'auth_neesgov', null, null, '1');
         }
 
+
+        //TODO Reconhecimento do usuário no servidor externo
         $neesUser = $this->handleGetUserNeesDataResults();
         $mdlUser = $DB->get_record('user', ['username'=>trim($neesUser->cpf), 'deleted'=>0]);
 
