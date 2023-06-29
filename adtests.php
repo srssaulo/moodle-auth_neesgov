@@ -5,4 +5,6 @@ use auth_neesgov\Connect;
 
 $cn = new Connect();
 
-echo $cn->getAthorizeURI();
+//echo $cn->getAthorizeURI();
+
+$cn->OpenIDAuthenticate();
