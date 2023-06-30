@@ -25,6 +25,8 @@
 require_once('../../config.php');
 require_once  "{$CFG->dirroot}'/auth/neesgov/classes/Connect.php"; //TODO put in general place
 
+//testing
+echo 'path to Connect class: '."{$CFG->dirroot}'/auth/neesgov/classes/Connect.php"; //TODO put in general place
 
 use auth_neesgov\Connect;
 
@@ -43,8 +45,7 @@ $returnparams = ['wantsurl' => $wantsurl, 'sesskey' => sesskey()];
 $returnurl = new moodle_url('/auth/neesgov/login.php', $returnparams); //provável que não seja necessário
 
 
-//testing
-echo 'path to Connect class: '."{$CFG->dirroot}'/auth/neesgov/classes/Connect.php"; //TODO put in general place
+
 $cn = new Connect();
 
 
