@@ -25,8 +25,8 @@ class Connect
     private const URL_CATALOGO_SELOS = "https://confiabilidades.staging.acesso.gov.br";
     private const REDIRECT_URI = "https://rieh-hmg.nees.ufal.br/auth/neesgov/login.php"; // redirectURI informada na chamada do serviço do
     private const SCOPES = "openid+email+profile+govbr_empresa+govbr_confiabilidades"; // Escopos openid+email+profile+govbr_empresa+govbr_confiabilidades
-    private const CLIENT_ID = "ava.rieh-hmg.nees.ufal.br"; // clientId informado na chamada do serviço do authorize. //TODO deve ser uma conf do plugin
-    private const CLIENT_SECRET = "eGU6QS89-hs_HPTI3_5atFzN-4WlMU9xN21AYAhS2DzmIhOeyKF-SfI6RjHIaGbNliaYJ73U92KnsuEbVw0WhQ"; //TODO deve ser uma conf do plugin
+    private const CLIENT_ID = "ac.ava.rieh-hmg.nees.ufal.br"; // clientId informado na chamada do serviço do authorize. //TODO deve ser uma conf do plugin
+    private const CLIENT_SECRET = "ANvI5Pt6ETw_G7I2xCuqecJeqrJk7MFa8K0moLkRxrMs_YkNbXgzdTj_-mTxxLRuHRFFnKMkxgfF_uGS-KurIOg"; //TODO deve ser uma conf do plugin
 
     private const CODE_CHALLENGE_METHOD = "S256";
 
