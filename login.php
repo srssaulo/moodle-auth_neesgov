@@ -23,6 +23,7 @@
  */
 
 require_once('../../config.php');
+use auth_neesgov\Connect;
 
 //$issuerid = required_param('id', PARAM_INT);
 $wantsurl = new moodle_url(optional_param('wantsurl', '', PARAM_URL));
@@ -38,6 +39,16 @@ $PAGE->set_pagelayout('popup');
 $returnparams = ['wantsurl' => $wantsurl, 'sesskey' => sesskey()];
 $returnurl = new moodle_url('/auth/neesgov/login.php', $returnparams); //provável que não seja necessário
 
-$neesflow = new \auth_neesgov\neesflow();
 
-$neesflow->handleRedirect();
+//testing
+
+$cn = new Connect();
+
+
+$cn->OpenIDAuthenticate();
+
+
+//TODO code new flow to authenticate with gov.br
+//$neesflow = new \auth_neesgov\neesflow();
+//
+//$neesflow->handleRedirect();
