@@ -43,7 +43,6 @@ $returnparams = ['wantsurl' => $wantsurl, 'sesskey' => sesskey()];
 $returnurl = new moodle_url('/auth/neesgov/login.php', $returnparams); //provável que não seja necessário
 
 
-die($CFG->dirroot."/auth/neesgov/classes/Connect.php");
 $cn = new Connect();
 
 
