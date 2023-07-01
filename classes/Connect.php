@@ -2,11 +2,6 @@
 
 namespace auth_neesgov;
 
-use Jumbojett\OpenIDConnectClient;
-use Jumbojett\OpenIDConnectClientException;
-
-require  $CFG->dirroot.'/auth/neesgov/vendor/autoload.php'; //TODO put in general place
-
 /**
  * Implements 3 steps Gov.br authorization service.
  * Class was implemented based in following sample:
