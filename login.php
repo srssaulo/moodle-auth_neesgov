@@ -24,7 +24,8 @@
 
 require_once('../../config.php');
 
-require_once $CFG->dirroot."/auth/neesgov/classes/Connect.php"; //TODO put in general place
+require_once $CFG->dirroot."/auth/neesgov/classes/Connect.php";
+require_once $CFG->dirroot."/auth/neesgov/classes/OpenIDConnectClient.php";
 
 use auth_neesgov\Connect;
 
