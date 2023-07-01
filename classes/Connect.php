@@ -45,6 +45,8 @@ class Connect
             self::CLIENT_SECRET
         );
 
+        $oidc->setRedirectURL(self::REDIRECT_URI);
+
 //        $codeVerifier = bin2hex(random_bytes(64));
 //
 //        //force code challenge in code request
