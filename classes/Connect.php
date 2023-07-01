@@ -72,6 +72,7 @@ class Connect
        echo "<br />profile: ".$oidc->requestUserInfo('profile');
        echo "<br />email: ".$oidc->requestUserInfo('email');
        echo "<br />picture: ".$oidc->requestUserInfo('picture');
+       echo "<br />name: ".$oidc->requestUserInfo('name');
 
 
 
