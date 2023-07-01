@@ -19,7 +19,7 @@ class Connect
     private const RESPONSE_TYPE = 'code';
     private const URL_SERVICOS = "https://api.staging.acesso.gov.br";
     private const URL_CATALOGO_SELOS = "https://confiabilidades.staging.acesso.gov.br";
-    private const REDIRECT_URI = "https://rieh-hmg.nees.ufal.br/auth/neesgov/login.php"; // redirectURI informada na chamada do serviço do
+    private const REDIRECT_URI = "https://ac.ava.rieh-hmg.nees.ufal.br/auth/neesgov/login.php"; // redirectURI informada na chamada do serviço do
     private const SCOPES = ['openid','email', 'profile']; // Escopos openid+email+profile+govbr_empresa+govbr_confiabilidades
     private const CLIENT_ID = "ac.ava.rieh-hmg.nees.ufal.br"; // clientId informado na chamada do serviço do authorize. //TODO deve ser uma conf do plugin
     private const CLIENT_SECRET = "ANvI5Pt6ETw_G7I2xCuqecJeqrJk7MFa8K0moLkRxrMs_YkNbXgzdTj_-mTxxLRuHRFFnKMkxgfF_uGS-KurIOg"; //TODO deve ser uma conf do plugin
@@ -68,7 +68,12 @@ class Connect
 
         $oidc->authenticate(); //aqui eu pego o code
 
-       print_object($oidc->requestUserInfo('sub'));
+       echo "id: ".$oidc->requestUserInfo('sub');
+       echo "<br />profile: ".$oidc->requestUserInfo('profile');
+       echo "<br />email: ".$oidc->requestUserInfo('email');
+
+
+
 //
 //        print_object($oidc->requestUserInfo('sub'));
 //        print_object($oidc->getVerifiedClaims('sub'));
