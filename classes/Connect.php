@@ -68,7 +68,12 @@ class Connect
 
         $oidc->authenticate(); //aqui eu pego o code
 
-       print_object($oidc->requestUserInfo('sub'));
+       echo "id: ".$oidc->requestUserInfo('sub');
+       echo "<br />profile: ".$oidc->requestUserInfo('profile');
+       echo "<br />email: ".$oidc->requestUserInfo('email');
+
+
+
 //
 //        print_object($oidc->requestUserInfo('sub'));
 //        print_object($oidc->getVerifiedClaims('sub'));
