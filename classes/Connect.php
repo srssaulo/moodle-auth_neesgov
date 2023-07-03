@@ -56,7 +56,7 @@ class Connect
         $oidc->setCodeChallengeMethod(self::CODE_CHALLENGE_METHOD);
 
         $accessToken = $oidc->getAccessToken();
-        if($oidc->authenticate() && isset($accessToken){
+        if($oidc->authenticate() && isset($accessToken)){
             $subs = (object)[
                 'id'=>$oidc->requestUserInfo('sub'),
                 'email'=>$oidc->requestUserInfo('email'),
