@@ -35,7 +35,6 @@ class Connect
 
     /**
      * Authenticate method using OpenId Connect Client
-     * @return void
      * @throws OpenIDConnectClientException
      */
     public function OpenIDAuthenticate(){
@@ -47,13 +46,6 @@ class Connect
 
         $oidc->setRedirectURL(self::REDIRECT_URI);
 
-//        $codeVerifier = bin2hex(random_bytes(64));
-//
-//        //force code challenge in code request
-//        $oidc->addAuthParam([
-//            'code_challenge_method'=>self::CODE_CHALLENGE_METHOD,
-//            'code_challenge'=>rtrim(strtr(base64_encode(hash('sha256', $codeVerifier, true)), '+/', '-_'), '=')
-//        ]);
 
         $oidc->setResponseTypes(self::RESPONSE_TYPE);
 
@@ -61,33 +53,22 @@ class Connect
         $oidc->addScope(self::SCOPES);
 
 
-//        $oidc->setRedirectURL(self::REDIRECT_URI); //if not was set, return to origin
-
         $oidc->setCodeChallengeMethod(self::CODE_CHALLENGE_METHOD);
 
+        $accessToken = $oidc->getAccessToken();
+        if($oidc->authenticate() && isset($accessToken){
+            $subs = (object)[
+                'id'=>$oidc->requestUserInfo('sub'),
+                'email'=>$oidc->requestUserInfo('email'),
+                'name'=>$oidc->requestUserInfo('name'),
+                'picture'=>$oidc->requestUserInfo('picture')
 
-        $oidc->authenticate(); //aqui eu pego o code
+            ];
 
-       echo "id: ".$oidc->requestUserInfo('sub');
-       echo "<br />profile: ".$oidc->requestUserInfo('profile');
-       echo "<br />email: ".$oidc->requestUserInfo('email');
-       echo "<br />picture: ".$oidc->requestUserInfo('picture');
-       echo "<br />name: ".$oidc->requestUserInfo('name');
+            return $subs;
 
+        } //aqui eu pego o code
 
-
-//
-//        print_object($oidc->requestUserInfo('sub'));
-//        print_object($oidc->getVerifiedClaims('sub'));
-
-
-//        print_object($sub);
-        //aqui o access token
-//       echo  $oidc->requestClientCredentialsToken()->access_token;
-//        echo $oidc->requestClientCredentialsToken();
-//       echo  $oidc->getProviderURL();
-//       echo $oidc->getResponseCode();
-//        $oidc->authenticate();
 
 
     }
