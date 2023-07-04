@@ -50,7 +50,9 @@ $cn = new Connect();
 print_object($cn->OpenIDAuthenticate());
 
 
+
 //TODO code new flow to authenticate with gov.br
 //$neesflow = new \auth_neesgov\neesflow();
 //
-//$neesflow->handleRedirect();
+//
+//$neesflow->handleRedirect($cn->getUserInfo());
