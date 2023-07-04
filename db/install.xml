@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="auth/neesgov/db" VERSION="20220516" COMMENT="XMLDB file for Moodle auth/neegov plugin"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+    <TABLES>
+        <TABLE NAME="auth_neesgov_token" COMMENT="Stores tokens.">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="username" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT="must be the same id gov.br"/>
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="moodle userid"/>
+                <FIELD NAME="authcode" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="auth code"/>
+                <FIELD NAME="expiry" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="token expiry"/>
+                <FIELD NAME="idtoken" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="id token"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="userid" UNIQUE="true" FIELDS="userid"/>
+                <INDEX NAME="username" UNIQUE="true" FIELDS="username"/>
+            </INDEXES>
+        </TABLE>
+    </TABLES>
+</XMLDB>
