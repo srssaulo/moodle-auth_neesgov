@@ -47,12 +47,12 @@ $returnurl = new moodle_url('/auth/neesgov/login.php', $returnparams); //prováv
 $cn = new Connect();
 
 
-$cn->OpenIDAuthenticate();
+print_object($cn->OpenIDAuthenticate());
 
 
 
 //TODO code new flow to authenticate with gov.br
-$neesflow = new \auth_neesgov\neesflow();
-
-
-$neesflow->handleRedirect($cn->getUserInfo());
+//$neesflow = new \auth_neesgov\neesflow();
+//
+//
+//$neesflow->handleRedirect($cn->getUserInfo());
