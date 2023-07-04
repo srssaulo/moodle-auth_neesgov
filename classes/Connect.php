@@ -17,8 +17,8 @@ class Connect
     private const URL_PROVIDER = "https://sso.staging.acesso.gov.br";
 
     private const RESPONSE_TYPE = 'code';
-    private const URL_SERVICOS = "https://api.staging.acesso.gov.br";
-    private const URL_CATALOGO_SELOS = "https://confiabilidades.staging.acesso.gov.br";
+//    private const URL_SERVICOS = "https://api.staging.acesso.gov.br";
+//    private const URL_CATALOGO_SELOS = "https://confiabilidades.staging.acesso.gov.br";
     private const REDIRECT_URI = "https://ac.ava.rieh-hmg.nees.ufal.br/auth/neesgov/login.php"; // redirectURI informada na chamada do serviço do
     private const SCOPES = ['openid','email', 'profile']; // Escopos openid+email+profile+govbr_empresa+govbr_confiabilidades
     private const CLIENT_ID = "ac.ava.rieh-hmg.nees.ufal.br"; // clientId informado na chamada do serviço do authorize. //TODO deve ser uma conf do plugin
@@ -27,10 +27,7 @@ class Connect
     private const CODE_CHALLENGE_METHOD = "S256";
 
 
-    public function __construct()
-    {
-
-    }
+    private  $userInfo = null;
 
 
     /**
@@ -61,16 +58,20 @@ class Connect
                 'id'=>$oidc->requestUserInfo('sub'),
                 'email'=>$oidc->requestUserInfo('email'),
                 'name'=>$oidc->requestUserInfo('name'),
-                'picture'=>$oidc->requestUserInfo('picture')
-
+                'picture'=>$oidc->requestUserInfo('picture'),
+                'idtoken'=>$oidc->getIdToken(),
+                'authcode'=>$_REQUEST['code'],
+                'expiry'=>$oidc->getVerifiedClaims('exp'),
             ];
 
-            return $subs;
+            $this->userInfo = $subs;
 
-        } //aqui eu pego o code
+        }
 
+    }
 
-
+    public function getUserInfo(){
+        return $this->userInfo;
     }
 
 
