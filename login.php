@@ -47,7 +47,9 @@ $returnurl = new moodle_url('/auth/neesgov/login.php', $returnparams); //prováv
 $cn = new Connect();
 
 
-print_object($cn->OpenIDAuthenticate());
+$cn->OpenIDAuthenticate();
+
+print_object($cn->getUserInfo());
 
 
 
