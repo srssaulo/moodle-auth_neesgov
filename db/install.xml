@@ -11,6 +11,7 @@
                 <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="moodle userid"/>
                 <FIELD NAME="authcode" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="auth code"/>
                 <FIELD NAME="expiry" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="token expiry"/>
+                <FIELD NAME="picture" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false" COMMENT="user picture of gov.br"/>
                 <FIELD NAME="idtoken" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="id token"/>
             </FIELDS>
             <KEYS>
