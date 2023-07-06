@@ -2,39 +2,13 @@
 
 namespace auth_neesgov;
 
-use auth_neesgov\httpclient;
+use core\event\user_login_failed;
 
 class neesflow
 {
 
-    private httpclient $httpClient;
-    private \stdClass $params;
 
 
-    private function getTokenAndUserProfile()
-    {
-        return (object)[
-            'accessToken' => optional_param('accessToken', null, PARAM_RAW_TRIMMED),
-            'userProfile' => optional_param('userProfile', 0, PARAM_INT),
-        ];
-    }
-
-    public function handleGetUserNeesDataResults()
-    {
-        if (empty($this->params)) {
-            $this->params = $this->getTokenAndUserProfile();
-        }
-        $this->httpClient = new httpclient();
-        $userNees = $this->httpClient->getUserNeesData($this->params); //in moodle cpf is username //TODO PAREI AQUI
-        if ($userNees->status_code) {
-            throw new \moodle_exception("status {$userNees->status_code}: $userNees->detail", 'auth_neesgov');
-        }
-
-        unset($userNees->dados);
-
-        //return cpf only number and fullname
-        return $userNees;
-    }
 
     /**
      * @param object $userInfo {'id'=>$oidc->requestUserInfo('sub'),
@@ -65,13 +39,19 @@ class neesflow
             $DB->update_record('user', $mdlUser);
         }
 
+        if($userInfo->email != $mdlUser->email){ //user\'s email update
+            $mdlUser->email = $userInfo->email;
+            $DB->update_record('user', $mdlUser);
+        }
+
+
         $user = authenticate_user_login($mdlUser->username, null, true);
         if (!empty($user)) {
             complete_user_login($user);
         } else {
 
             $eventdata = ['other' => ['username' => $mdlUser->username, 'reason' => AUTH_LOGIN_NOUSER]];
-            $event = \core\event\user_login_failed::create($eventdata);
+            $event = user_login_failed::create($eventdata);
             $event->trigger();
 
             // There was a problem in authenticate_user_login.
