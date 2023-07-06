@@ -38,11 +38,9 @@ $PAGE->set_context(context_system::instance());
 //$PAGE->set_url(new moodle_url('/auth/neesgov/login.php', ['id' => $issuerid]));
 $PAGE->set_url(new moodle_url('/auth/neesgov/login.php'));
 $PAGE->set_pagelayout('popup');
-//require_sesskey(); //TODO reactivate
 
 
 $returnparams = ['wantsurl' => $wantsurl, 'sesskey' => sesskey()];
-$returnurl = new moodle_url('/auth/neesgov/login.php', $returnparams); //provável que não seja necessário
 
 
 $cn = new Connect();

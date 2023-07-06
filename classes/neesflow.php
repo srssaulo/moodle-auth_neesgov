@@ -4,6 +4,11 @@ namespace auth_neesgov;
 
 use core\event\user_login_failed;
 
+/**
+ * @package auth_neesgov
+ * @copyright 2023 Saulo Sá <srssaulo@gmail.com>
+ * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ */
 class neesflow
 {
 
