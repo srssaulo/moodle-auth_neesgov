@@ -89,10 +89,15 @@ class auth extends \auth_plugin_base
         }
 
         $code = optional_param('code', null, PARAM_RAW);
+        $tokenrec = $DB->get_record('auth_neesgov_token', ['username' => $username]);
 
+        $userExists =  $DB->record_exists('user', ['username' => $username]);
 
-
-        if ($DB->record_exists('user', ['username' => $username])) { //TODO we need search in auth_neesgov_token table first
+        if (
+            $userExists &&
+            !empty($code) &&
+            $tokenrec->authcode === $code
+        ) {
             return true;
         }
         return false;
