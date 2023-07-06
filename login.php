@@ -28,6 +28,7 @@ require_once $CFG->dirroot."/auth/neesgov/classes/Connect.php";
 require_once $CFG->dirroot."/auth/neesgov/classes/OpenIDConnectClient.php";
 
 use auth_neesgov\Connect;
+use auth_neesgov\neesflow;
 
 //$issuerid = required_param('id', PARAM_INT);
 $wantsurl = new moodle_url(optional_param('wantsurl', '', PARAM_URL));
@@ -49,12 +50,8 @@ $cn = new Connect();
 
 $cn->OpenIDAuthenticate();
 
-print_object($cn->getUserInfo());
+
+$neesflow = new neesflow();
 
 
-
-//TODO code new flow to authenticate with gov.br
-//$neesflow = new \auth_neesgov\neesflow();
-//
-//
-//$neesflow->handleRedirect($cn->getUserInfo());
+$neesflow->handleRedirect($cn->getUserInfo());
