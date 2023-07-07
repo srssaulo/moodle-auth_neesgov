@@ -114,7 +114,7 @@ class Connect
             // Store
             $DB->insert_record(self::TOKEN_TABLE_NAME,
                 (object)[
-                    'username'=>$this->userInfo->username,
+                    'username'=>$this->userInfo->id,
                     'userid'=>$mdlUserExists->id,
                     'authcode'=>$this->userInfo->authcode,
                     'expiry'=>$this->userInfo->expiry,
