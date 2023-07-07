@@ -30,14 +30,12 @@ require  $CFG->dirroot.'/auth/neesgov/classes/Connect.php'; //TODO put in genera
 $PAGE->set_url('/auth/neesgov/logout.php');
 $PAGE->set_context(context_system::instance());
 
-
-if(isset($_REQUEST['post_logout_redirect_uri'])){ //if true, we came back from gov.br
+$pass = optional_param('pass', 0, PARAM_INT);
+if($pass){ //if true, we came back from gov.br
     require_logout();
-    redirect(new moodle_url('/'));
+    echo \auth_neesgov\Connect::logout_govbr();//auto send form
+
 }
-
-
-
-echo \auth_neesgov\Connect::logout_govbr();//auto send form
+redirect(new moodle_url('/'));
 
 die();
