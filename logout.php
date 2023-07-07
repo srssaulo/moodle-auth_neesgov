@@ -32,7 +32,8 @@ $PAGE->set_context(context_system::instance());
 
 
 if(isset($_REQUEST['MOODLEID1_'])){ //if true, we came back from gov.br
-    redirect(new moodle_url('/'));
+//    redirect(new moodle_url('/'));
+    redirect('https://g1.globo.com/');
 }
 
 
