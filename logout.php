@@ -33,7 +33,7 @@ $PAGE->set_context(context_system::instance());
 
 if(isset($_REQUEST['MOODLEID1_'])){ //if true, we came back from gov.br
 //    redirect(new moodle_url('/'));
-    redirect('https://g1.globo.com/');
+    redirect('/');
 }
 
 
@@ -41,7 +41,7 @@ if(isset($_REQUEST['MOODLEID1_'])){ //if true, we came back from gov.br
 //must call before. Just return when user is not logged
 require_logout();
 
-
+echo 'Logout Moodle '; die;
 echo \auth_neesgov\Connect::logout_govbr();//auto send form
 
 
