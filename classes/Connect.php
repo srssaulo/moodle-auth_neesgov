@@ -140,6 +140,7 @@ class Connect
     }
 
     public static function logout_govbr(){
+        echo 'Logout Moodle '; die;
         $redirect_uri = self::POST_LOGOUT_REDIRECT_URI;
         $logout_request = self::REDIRECT_URI;
         $action = $redirect_uri."?post_logout_redirect_uri=".$logout_request;
