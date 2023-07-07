@@ -106,7 +106,12 @@ class auth extends \auth_plugin_base
 
     public function logoutpage_hook()
     {
-        redirect(new \moodle_url('/auth/neesgov/logout.php'));
+        global  $CFG, $redirect, $USER;
+
+        // Only do this if the user is actually logged in via neesgov
+        if ($USER->auth === $this->authtype) {
+            $redirect = $CFG->wwwroot . '/auth/neesgov/logout.php';
+        }
     }
 
 }
