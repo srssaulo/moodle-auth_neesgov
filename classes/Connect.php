@@ -2,6 +2,7 @@
 
 namespace auth_neesgov;
 
+use enrol_self\self_test;
 use Exception;
 
 /**
@@ -18,11 +19,15 @@ class Connect
 
     private const TOKEN_TABLE_NAME = 'auth_neesgov_token';
     private const URL_PROVIDER = "https://sso.staging.acesso.gov.br";
+    private const URL_PROVIDER_LOGOUT = "https://sso.staging.acesso.gov.br/logout";
 
     private const RESPONSE_TYPE = 'code';
 //    private const URL_SERVICOS = "https://api.staging.acesso.gov.br";
 //    private const URL_CATALOGO_SELOS = "https://confiabilidades.staging.acesso.gov.br";
     private const REDIRECT_URI = "https://ac.ava.rieh-hmg.nees.ufal.br/auth/neesgov/login.php"; // redirectURI informada na chamada do serviço do
+
+    private const POST_LOGOUT_REDIRECT_URI = "https://ac.ava.rieh-hmg.nees.ufal.br/auth/neesgov/logout.php";
+
     private const SCOPES = ['openid', 'email', 'profile']; // Escopos openid+email+profile+govbr_empresa+govbr_confiabilidades
     private const CLIENT_ID = "ac.ava.rieh-hmg.nees.ufal.br"; // clientId informado na chamada do serviço do authorize. //TODO deve ser uma conf do plugin
     private const CLIENT_SECRET = "ANvI5Pt6ETw_G7I2xCuqecJeqrJk7MFa8K0moLkRxrMs_YkNbXgzdTj_-mTxxLRuHRFFnKMkxgfF_uGS-KurIOg"; //TODO deve ser uma conf do plugin
@@ -131,6 +136,24 @@ class Connect
                 ]);
         }
 
+
+    }
+
+    public static function logout_govbr(){
+        $redirect_uri = self::POST_LOGOUT_REDIRECT_URI;
+        $logout_request = self::REDIRECT_URI;
+        $action = $redirect_uri."?post_logout_redirect_uri=".$logout_request;
+        return <<<HTML
+        <script>
+       
+        var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "{$action}");
+        document.body.appendChild(form);
+        form.submit();
+</script>
+    
+HTML;
 
     }
 
