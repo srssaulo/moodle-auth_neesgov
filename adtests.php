@@ -8,4 +8,6 @@ $cn = new Connect();
 
 //echo $cn->getAthorizeURI();
 
-$cn->OpenIDAuthenticate();
+//$cn->OpenIDAuthenticate();
+
+echo Connect::logout_govbr();

@@ -65,11 +65,11 @@ class auth extends \auth_plugin_base
         $params = ['sesskey' => sesskey()];
 
         return [
-          [
-              'url'=>new \moodle_url('/auth/neesgov/login.php', $params),
-              'icon'=>new pix_icon('neesgov', get_string('pluginname', 'auth_neesgov'), 'auth_neesgov'),
-              'name'=>strip_tags(format_text('Logar com o GOV.BR')),
-          ]
+            [
+                'url' => new \moodle_url('/auth/neesgov/login.php', $params),
+                'icon' => new pix_icon('neesgov', get_string('pluginname', 'auth_neesgov'), 'auth_neesgov'),
+                'name' => strip_tags(format_text('Logar com o GOV.BR')),
+            ]
         ];
     }
 
@@ -80,7 +80,7 @@ class auth extends \auth_plugin_base
      * @param string $password The password (with system magic quotes)
      * @return bool Authentication success or failure.
      */
-    public function user_login($username, $password)
+    public function user_login($username, $password = null)
     {
         global $CFG, $DB;
         // Short circuit for guest user.
@@ -88,14 +88,25 @@ class auth extends \auth_plugin_base
             return false;
         }
 
-        $neesflow = new neesflow();
-        $userNees = $neesflow->handleGetUserNeesDataResults();//TODO we need test
+        $code = optional_param('code', null, PARAM_RAW);
+        $tokenrec = $DB->get_record('auth_neesgov_token', ['username' => $username]);
 
-        if ($userNees->cpf && $DB->record_exists('user', ['username' => $username])) {
+        $userExists =  $DB->record_exists('user', ['username' => $username]);
+
+        if (
+            $userExists &&
+            !empty($code) &&
+            $tokenrec->authcode === $code
+        ) {
             return true;
         }
         return false;
 
+    }
+
+    public function logoutpage_hook()
+    {
+        redirect(new \moodle_url('/auth/neesgov/logout.php'));
     }
 
 }
