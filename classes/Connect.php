@@ -140,9 +140,9 @@ class Connect
     }
 
     public static function logout_govbr(){
-        $redirect_uri = self::POST_LOGOUT_REDIRECT_URI;
-        $logout_request = self::REDIRECT_URI;
-        $action = $redirect_uri."?post_logout_redirect_uri=".$logout_request;
+        $uri_provider_logout = self::URL_PROVIDER_LOGOUT;
+        $post_logout_redirect_uri = self::POST_LOGOUT_REDIRECT_URI;
+        $action = $uri_provider_logout."?post_logout_redirect_uri=".$post_logout_redirect_uri;
         return <<<HTML
         <html>
         <body>

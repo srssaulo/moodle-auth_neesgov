@@ -31,19 +31,13 @@ $PAGE->set_url('/auth/neesgov/logout.php');
 $PAGE->set_context(context_system::instance());
 
 
-//if(isset($_REQUEST['MOODLEID1_'])){ //if true, we came back from gov.br
-//    redirect(new moodle_url('/'));
-//    redirect('/');
-
-//}
+if(isset($_REQUEST['post_logout_redirect_uri'])){ //if true, we came back from gov.br
+    require_logout();
+    redirect(new moodle_url('/'));
+}
 
 
 
 echo \auth_neesgov\Connect::logout_govbr();//auto send form
-
-require_logout();
-
-
-
 
 die();
