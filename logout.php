@@ -42,7 +42,7 @@ if($_REQUEST){
 require_logout();
 
 
-\auth_neesgov\Connect::logout_govbr();
+echo \auth_neesgov\Connect::logout_govbr();//auto send form
 
 
 
