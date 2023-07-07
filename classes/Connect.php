@@ -144,14 +144,17 @@ class Connect
         $logout_request = self::REDIRECT_URI;
         $action = $redirect_uri."?post_logout_redirect_uri=".$logout_request;
         return <<<HTML
-        <script>
-       
-        var form = document.createElement("form");
-        form.setAttribute("method", "post");
-        form.setAttribute("action", "{$action}");
-        document.body.appendChild(form);
-        form.submit();
-</script>
+        <html>
+        <body>
+        <script type="text/javascript">       
+            var form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "{$action}");
+            document.body.appendChild(form);
+            form.submit();
+        </script>
+        </body>
+        </html>
     
 HTML;
 
