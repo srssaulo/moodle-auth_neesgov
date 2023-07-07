@@ -108,10 +108,9 @@ class auth extends \auth_plugin_base
     {
         global  $CFG, $redirect, $USER;
 
-        echo "I wanna redirect "; die;
-
         // Only do this if the user is actually logged in via neesgov
         if ($USER->auth === $this->authtype) {
+            echo "I wanna redirect "; die;
             $redirect = $CFG->wwwroot . '/auth/neesgov/logout.php';
         }
     }
