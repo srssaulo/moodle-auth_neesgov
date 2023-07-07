@@ -31,10 +31,9 @@ $PAGE->set_url('/auth/neesgov/logout.php');
 $PAGE->set_context(context_system::instance());
 
 
-if($_REQUEST){
-    print_object($_REQUEST);
+if(isset($_REQUEST['MOODLEID1_'])){ //if true, we came back from gov.br
+    redirect(new moodle_url('/'));
 }
-
 
 
 
