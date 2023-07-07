@@ -34,12 +34,8 @@ $PAGE->set_context(context_system::instance());
 if(isset($_REQUEST['MOODLEID1_'])){ //if true, we came back from gov.br
 //    redirect(new moodle_url('/'));
     redirect('/');
+    require_logout();
 }
-
-
-
-//must call before. Just return when user is not logged
-require_logout();
 
 echo \auth_neesgov\Connect::logout_govbr();//auto send form
 
