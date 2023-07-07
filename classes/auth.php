@@ -104,4 +104,9 @@ class auth extends \auth_plugin_base
 
     }
 
+    public function logoutpage_hook()
+    {
+        redirect(new \moodle_url('/auth/neesgov/logout.php'));
+    }
+
 }
