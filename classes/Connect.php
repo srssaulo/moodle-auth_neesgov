@@ -21,8 +21,7 @@ class Connect
     private const URL_PROVIDER = "https://sso.staging.acesso.gov.br";
 
     private const RESPONSE_TYPE = 'code';
-//    private const URL_SERVICOS = "https://api.staging.acesso.gov.br";
-//    private const URL_CATALOGO_SELOS = "https://confiabilidades.staging.acesso.gov.br";
+
     private const REDIRECT_URI = "https://ac.ava.rieh-hmg.nees.ufal.br/auth/neesgov/login.php"; // redirectURI informada na chamada do serviço do
 
     private const POST_LOGOUT_REDIRECT_URI = "https://ac.ava.rieh-hmg.nees.ufal.br/auth/neesgov/logout.php";
@@ -36,6 +35,17 @@ class Connect
 
     private $userInfo = null;
 
+    private static function get_config_vars(){
+        return [
+            'URL_PROVIDER'=> get_config('auth_neesgov', 'uri_provider'),
+            'REDIRECT_URI'=> get_config('auth_neesgov', 'redirect_uri'),
+            'POST_LOGOUT_REDIRECT_URI'=> get_config('auth_neesgov', 'post_logout_uri'),
+            'CLIENT_ID'=> get_config('auth_neesgov', 'client_id'),
+            'CLIENT_SECRET'=> get_config('auth_neesgov', 'client_secret'),
+        ];
+
+    }
+
 
     /**
      * Authenticate method using OpenId Connect Client
@@ -43,13 +53,16 @@ class Connect
      */
     public function OpenIDAuthenticate()
     {
+
+        $ENV = self::get_config_vars();
+
         $oidc = new OpenIDConnectClient(
-            self::URL_PROVIDER,
-            self::CLIENT_ID,
-            self::CLIENT_SECRET
+            $ENV['URL_PROVIDER'],
+            $ENV['CLIENT_ID'],
+            $ENV['CLIENT_SECRET'],
         );
 
-        $oidc->setRedirectURL(self::REDIRECT_URI);
+        $oidc->setRedirectURL($ENV['REDIRECT_URI']);
 
 
         $oidc->setResponseTypes(self::RESPONSE_TYPE);
@@ -139,8 +152,11 @@ class Connect
     }
 
     public static function logout_govbr(){
-        $uri_provider_logout = self::URL_PROVIDER.'/logout';
-        $post_logout_redirect_uri = self::POST_LOGOUT_REDIRECT_URI;
+
+        $ENV = self::get_config_vars();
+
+        $uri_provider_logout = $ENV['URL_PROVIDER'].'/logout';
+        $post_logout_redirect_uri = $ENV['POST_LOGOUT_REDIRECT_URI'];
         $action = $uri_provider_logout."?post_logout_redirect_uri=".$post_logout_redirect_uri;
         return <<<HTML
         <script type="text/javascript">       
