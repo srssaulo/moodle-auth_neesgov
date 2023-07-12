@@ -45,7 +45,7 @@ if ($ADMIN->fulltree) {
         get_string('client_id', 'auth_neesgov'),  get_string('client_id_desc', 'auth_neesgov'), '' , PARAM_URL));
 
     $settings->add(new admin_setting_configtext('auth_neesgov/client_secret',
-        get_string('client_secret', 'auth_neesgov'),  get_string('client_secret_desc', 'auth_neesgov'), '' , PARAM_URL));
+        get_string('client_secret', 'auth_neesgov'),  get_string('client_secret_desc', 'auth_neesgov'), '' , PARAM_TEXT));
 
 
 
