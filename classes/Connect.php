@@ -6,11 +6,9 @@ use enrol_self\self_test;
 use Exception;
 
 /**
- * Implements 3 steps Gov.br authorization service.
- * Class was implemented based in following sample:
  * <https://manual-roteiro-integracao-login-unico.servicos.gov.br/pt/stable/arquivos/ExemploIntegracaoGovBr.java>
  * Steps docs:
- * <https://manual-roteiro-integracao-login-unico.servicos.gov.br/pt/stable/iniciarintegracao.html
+ * <https://manual-roteiro-integracao-login-unico.servicos.gov.br/pt/stable/iniciarintegracao.html>
  *
  * @author Saulo de Sá <srssaulo@gmail.com>
  */
@@ -18,17 +16,11 @@ class Connect
 {
 
     private const TOKEN_TABLE_NAME = 'auth_neesgov_token';
-    private const URL_PROVIDER = "https://sso.staging.acesso.gov.br";
 
     private const RESPONSE_TYPE = 'code';
 
-    private const REDIRECT_URI = "https://ac.ava.rieh-hmg.nees.ufal.br/auth/neesgov/login.php"; // redirectURI informada na chamada do serviço do
-
-    private const POST_LOGOUT_REDIRECT_URI = "https://ac.ava.rieh-hmg.nees.ufal.br/auth/neesgov/logout.php";
 
     private const SCOPES = ['openid', 'email', 'profile']; // Escopos openid+email+profile+govbr_empresa+govbr_confiabilidades
-    private const CLIENT_ID = "ac.ava.rieh-hmg.nees.ufal.br"; // clientId informado na chamada do serviço do authorize. //TODO deve ser uma conf do plugin
-    private const CLIENT_SECRET = "ANvI5Pt6ETw_G7I2xCuqecJeqrJk7MFa8K0moLkRxrMs_YkNbXgzdTj_-mTxxLRuHRFFnKMkxgfF_uGS-KurIOg"; //TODO deve ser uma conf do plugin
 
     private const CODE_CHALLENGE_METHOD = "S256";
 
