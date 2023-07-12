@@ -19,7 +19,6 @@ class Connect
 
     private const TOKEN_TABLE_NAME = 'auth_neesgov_token';
     private const URL_PROVIDER = "https://sso.staging.acesso.gov.br";
-    private const URL_PROVIDER_LOGOUT = "https://sso.staging.acesso.gov.br/logout";
 
     private const RESPONSE_TYPE = 'code';
 //    private const URL_SERVICOS = "https://api.staging.acesso.gov.br";
@@ -140,7 +139,7 @@ class Connect
     }
 
     public static function logout_govbr(){
-        $uri_provider_logout = self::URL_PROVIDER_LOGOUT;
+        $uri_provider_logout = self::URL_PROVIDER.'/logout';
         $post_logout_redirect_uri = self::POST_LOGOUT_REDIRECT_URI;
         $action = $uri_provider_logout."?post_logout_redirect_uri=".$post_logout_redirect_uri;
         return <<<HTML

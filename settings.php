@@ -30,16 +30,23 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_heading('auth_neesgov/pluginname', '',
         get_string('generaldesc', 'auth_neesgov')));
 
-    // Display locking / mapping of profile fields.
-//    $authplugin = get_auth_plugin('none');
-//    display_auth_lock_options($settings, $authplugin->authtype, $authplugin->userfields,
-//        get_string('auth_fieldlocks_help', 'auth'), false, false);
 
-    $settings->add(new admin_setting_configtext('auth_neesgov/neesmodid',
-       get_string('moduleid', 'auth_neesgov'),  get_string('moduleid_desc', 'auth_neesgov'), '' , PARAM_INT));
 
-    $settings->add(new admin_setting_configtext('auth_neesgov/redirecturl',
-       get_string('redirecturl', 'auth_neesgov'),  get_string('redirecturl_desc', 'auth_neesgov'), 'https://develop-login-integracao-dot-scanner-prova.rj.r.appspot.com/login' , PARAM_URL));
+    $settings->add(new admin_setting_configtext('auth_neesgov/uri_provider',
+       get_string('uri_provider', 'auth_neesgov'),  get_string('uri_provider_desc', 'auth_neesgov'), 'https://sso.staging.acesso.gov.br' , PARAM_URL));
+
+    $settings->add(new admin_setting_configtext('auth_neesgov/redirect_uri',
+        get_string('redirect_uri', 'auth_neesgov'),  get_string('redirect_uri_desc', 'auth_neesgov'), '[moodle_base_url]/auth/neesgov/login.php' , PARAM_URL));
+
+    $settings->add(new admin_setting_configtext('auth_neesgov/post_logout_uri',
+        get_string('post_logout_uri', 'auth_neesgov'),  get_string('post_logout_uri_desc', 'auth_neesgov'), '[moodle_base_url]/auth/neesgov/logout.php' , PARAM_URL));
+
+    $settings->add(new admin_setting_configtext('auth_neesgov/client_id',
+        get_string('client_id', 'auth_neesgov'),  get_string('client_id_desc', 'auth_neesgov'), '' , PARAM_URL));
+
+    $settings->add(new admin_setting_configtext('auth_neesgov/client_secret',
+        get_string('client_secret', 'auth_neesgov'),  get_string('client_secret_desc', 'auth_neesgov'), '' , PARAM_URL));
+
 
 
 }
