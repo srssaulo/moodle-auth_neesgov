@@ -46,8 +46,21 @@ class neesflow
 
         if($userInfo->email != $mdlUser->email){ //user\'s email update
             $mdlUser->email = $userInfo->email;
-            $DB->update_record('user', $mdlUser);
         }
+
+        //updating first and last name gov.br
+        $gov_firstname = strtok($userInfo->name, " ");
+        $gov_lastname = strtok(null);
+
+        if($mdlUser->firstname != $gov_firstname){
+            $mdlUser->firstname = $gov_firstname;
+        }
+        if($mdlUser->lastname != $gov_lastname){
+            $mdlUser->lastname = $gov_lastname;
+        }
+
+        //updating mdl user
+        $DB->update_record('user', $mdlUser);
 
 
         $user = authenticate_user_login($mdlUser->username, null, true);
