@@ -23,25 +23,20 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
-
-$string['pluginname'] = 'Nees GOVBR';
-$string['auth_neesgovdescription'] = 'Nees Gov Br connect plugin';
-$string['generaldesc'] = 'Nees GOVBR auth general config vars';
+$string['pluginname'] = 'Nees Gov.br';
+$string['auth_neesgovdescription'] = 'Nees Gov.br connect plugin';
+$string['generaldesc'] = 'Nees Gov.br auth general config vars';
 $string['moduleid'] = 'Nees module id';
 $string['moduleid_desc'] = 'Nees app repository module id';
-
+$string['plugindescription'] = 'This authentication plugin  allows users to login with their credentials from Gov.br provider.';
 $string['uri_provider'] = 'Provider URI';
-$string['uri_provider_desc'] = "Provider base URL. Compose Authorize and Logout requests. <b>Obs</b>: default value is <b>staging</b>";
-
+$string['uri_provider_desc'] = 'Provider base URL. Compose Authorize and Logout requests. <b>Obs</b>: default value is <b>staging</b>';
 $string['redirect_uri'] = 'After authorize, redirect URI';
-$string['redirect_uri_desc'] = "Previously agreed with gov.br. Must be the agreed URI.";
-
+$string['redirect_uri_desc'] = 'Previously agreed with Gov.br. Must be the agreed URI.';
 $string['post_logout_uri'] = 'After logout, redirect URI';
-$string['post_logout_uri_desc'] = "Previously agreed with gov.br. Must be the agreed URI.";
-
+$string['post_logout_uri_desc'] = 'Previously agreed with Gov.br. Must be the agreed URI.';
 $string['client_id'] = 'Client ID';
-$string['client_id_desc'] = "Client ID previously agreed with gov.br.";
-
+$string['client_id_desc'] = 'Client ID previously agreed with gov.br.';
 $string['client_secret'] = 'Client secret';
-$string['client_secret_desc'] = "Client secret previously agreed with gov.br.";
+$string['client_secret_desc'] = 'Client secret previously agreed with gov.br.';
 

@@ -37,6 +37,9 @@ require_once($CFG->libdir . '/authlib.php');
 class auth_plugin_neesgov extends \auth_neesgov\auth
 {
 
+    public function __construct() {
+        $this->authtype = 'neesgov';
+    }
 
 }
 
