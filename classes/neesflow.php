@@ -65,7 +65,7 @@ class neesflow
 
         $user = authenticate_user_login($mdlUser->username, null, true);
         if (!empty($user)) {
-            if(get_user_preferences('auth_forcepasswordchange', null, $user)){
+            if(get_user_preferences('auth_forcepasswordchange', 0, $user)){
                 set_user_preference('auth_forcepasswordchange', 0, $user);
             }
             complete_user_login($user);
