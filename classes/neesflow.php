@@ -37,10 +37,10 @@ class neesflow
             redirect(new \moodle_url('/login/logout.php', ['sesskey' => sesskey()]), 'User doesn\'t created in moodle', 3);
         }
 
-//        if ($mdlUser->auth != 'neesgov') {//change user auth type to neesgov
-        $mdlUser->auth = 'neesgov';
-//            $DB->update_record('user', $mdlUser);
-//        }
+        if ($mdlUser->auth != 'neesgov') {//change user auth type to neesgov
+            $mdlUser->auth = 'neesgov';
+            $DB->update_record('user', $mdlUser);
+        }
 
         if ($userInfo->email != $mdlUser->email) { //user\'s email update
             $mdlUser->email = $userInfo->email;
@@ -98,8 +98,10 @@ class neesflow
             redirect(new \moodle_url('/login'), 'login fail');
         }
 
-        //its all right and user is redirected to dashboardo Moodle
-        redirect(new \moodle_url('/my'));
+            $this->handlelogin($userInfo);
+
+            //its all right and user is redirected to dashboardo Moodle
+            redirect(new \moodle_url('/my'));
 
     }
 
