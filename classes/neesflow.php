@@ -39,10 +39,10 @@ class neesflow
             throw new \moodle_exception('User doesn\'t created in moodle', 'auth_neesgov');
         }
 
-//        if ($mdlUser->auth != 'neesgov') {//change user auth type to neesgov
-//            $mdlUser->auth = 'neesgov';
-//            $DB->update_record('user', $mdlUser);
-//        }
+        if ($mdlUser->auth != 'neesgov') {//change user auth type to neesgov
+            $mdlUser->auth = 'neesgov';
+            $DB->update_record('user', $mdlUser);
+        }
 
         if($userInfo->email != $mdlUser->email){ //user\'s email update
             $mdlUser->email = $userInfo->email;
@@ -65,9 +65,9 @@ class neesflow
 
         $user = authenticate_user_login($mdlUser->username, null, true);
         if (!empty($user)) {
-            if(get_user_preferences('auth_forcepasswordchange', null, $user)){
-                set_user_preference('auth_forcepasswordchange', 0, $user);
-            }
+//            if(get_user_preferences('auth_forcepasswordchange', null, $user)){
+//                set_user_preference('auth_forcepasswordchange', 0, $user);
+//            }
             complete_user_login($user);
         } else {
 
