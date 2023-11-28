@@ -22,7 +22,7 @@ class neesflow
      */
     private function handlelogin($userInfo)
     {
-        global $DB;
+        global $DB, $CFG;
 
 
         // Do not continue if auth plugin is not enabled.
@@ -34,7 +34,7 @@ class neesflow
         $mdlUser = $DB->get_record('user', ['username' => trim($userInfo->id), 'deleted' => 0]);
 
         if (!$mdlUser) {
-            redirect(new \moodle_url('/login/logout.php', ['sesskey' => sesskey()]), 'Usuário não cadastrado no Moodle', 3);
+            redirect($CFG->wwwroot . '/auth/neesgov/logout.php?pass=1', 'Usuário não cadastrado no Moodle', 3);
         }
 
         if ($mdlUser->auth != 'neesgov') {//change user auth type to neesgov
