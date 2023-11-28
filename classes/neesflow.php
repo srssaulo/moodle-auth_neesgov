@@ -93,6 +93,7 @@ class neesflow
      */
     public function handleRedirect($userInfo)
     {
+        global $DB, $USER;
 
         if(is_null($userInfo)){
             //if null  didn't make login correctly
@@ -100,7 +101,9 @@ class neesflow
             redirect(new \moodle_url('/login'), 'login fail');
         }
 
-            $this->handlelogin($userInfo);
+            $USER->auth = 'manual';
+            $DB->update_record('user', $USER);//returning user to manual auth plugin
+
 
             //its all right and user is redirected to dashboardo Moodle
             redirect(new \moodle_url('/my'));
