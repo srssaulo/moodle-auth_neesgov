@@ -39,10 +39,10 @@ class neesflow
             throw new \moodle_exception('User doesn\'t created in moodle', 'auth_neesgov');
         }
 
-        if ($mdlUser->auth != 'neesgov') {//change user auth type to neesgov
-            $mdlUser->auth = 'neesgov';
-            $DB->update_record('user', $mdlUser);
-        }
+//        if ($mdlUser->auth != 'neesgov') {//change user auth type to neesgov
+//            $mdlUser->auth = 'neesgov';
+//            $DB->update_record('user', $mdlUser);
+//        }
 
         if($userInfo->email != $mdlUser->email){ //user\'s email update
             $mdlUser->email = $userInfo->email;
