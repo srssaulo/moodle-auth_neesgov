@@ -59,7 +59,6 @@ class neesflow
             $mdlUser->lastname = $gov_lastname;
         }
 
-        $mdlUser->auth = '';
 
         //updating mdl user
         $DB->update_record('user', $mdlUser);
