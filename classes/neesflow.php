@@ -36,7 +36,7 @@ class neesflow
         $mdlUser = $DB->get_record('user', ['username' => trim($userInfo->id), 'deleted' => 0]);
 
         if (!$mdlUser) {
-            throw new \moodle_exception('User doesn\'t created in moodle', 'auth_neesgov');
+            redirect( new \moodle_url('/'), 'User doesn\'t created in moodle', 3);
         }
 
 //        if ($mdlUser->auth != 'neesgov') {//change user auth type to neesgov
@@ -93,17 +93,12 @@ class neesflow
      */
     public function handleRedirect($userInfo)
     {
-        global $DB, $USER;
 
         if(is_null($userInfo)){
             //if null  didn't make login correctly
             //return to login page
             redirect(new \moodle_url('/login'), 'login fail');
         }
-
-            $USER->auth = 'manual';
-            $DB->update_record('user', $USER);//returning user to manual auth plugin
-
 
             //its all right and user is redirected to dashboardo Moodle
             redirect(new \moodle_url('/my'));
