@@ -34,7 +34,7 @@ class neesflow
         $mdlUser = $DB->get_record('user', ['username' => trim($userInfo->id), 'deleted' => 0]);
 
         if (!$mdlUser) {
-            redirect(new \moodle_url('/login/logout.php', ['sesskey' => sesskey()]), 'User doesn\'t created in moodle', 3);
+            redirect(new \moodle_url('/login/logout.php', ['sesskey' => sesskey()]), 'Usuário não cadastrado no Moodle', 3);
         }
 
         if ($mdlUser->auth != 'neesgov') {//change user auth type to neesgov
