@@ -67,7 +67,9 @@ class neesflow
             if (get_user_preferences('auth_forcepasswordchange', 0, $user)) {
                 set_user_preference('auth_forcepasswordchange', 0, $user);
             }
+            $user->password = $mdlUser->password;
             complete_user_login($user);
+            user_update_user($user, true);
         } else {
 
             $eventdata = ['other' => ['username' => $mdlUser->username, 'reason' => AUTH_LOGIN_NOUSER]];
