@@ -48,10 +48,6 @@ class auth extends \auth_plugin_base
     }
 
 
-    public function prevent_local_passwords()
-    {
-        return true;
-    }
 
     /**
      * Indicates if moodle should automatically update internal user
