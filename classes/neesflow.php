@@ -62,7 +62,7 @@ class neesflow
         $DB->update_record('user', $mdlUser);
 
 
-        $user = authenticate_user_login($mdlUser->username, null, true);
+        $user = authenticate_user_login($mdlUser->username, $mdlUser->password, true);
         if (!empty($user)) {
             if (get_user_preferences('auth_forcepasswordchange', 0, $user)) {
                 set_user_preference('auth_forcepasswordchange', 0, $user);
