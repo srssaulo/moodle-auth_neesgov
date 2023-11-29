@@ -44,7 +44,7 @@ class auth extends \auth_plugin_base
      */
     public function is_internal()
     {
-        return false;
+        return true;
     }
 
 

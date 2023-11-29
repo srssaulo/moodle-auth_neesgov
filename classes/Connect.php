@@ -111,7 +111,7 @@ class Connect
         if (!$mdlUserExists) {
 //            throw new Exception('Usuário não cadastrado no Moodle');
             //neesgov logout because user is login in gov.br
-            redirect($CFG->wwwroot . '/auth/neesgov/logout.php?pass=1', 'Usuário não cadastrado no Moodle', 3);
+            redirect($CFG->wwwroot . '/auth/neesgov/logout.php?pass=1', 'Usuário não cadastrado no Moodle', 3, \core\output\notification::NOTIFY_ERROR);
         }
 
         $userTokenExists = $DB->get_record(self::TOKEN_TABLE_NAME, ['userid' => $mdlUserExists->id], 'id');
