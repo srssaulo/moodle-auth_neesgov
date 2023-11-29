@@ -91,7 +91,7 @@ class Connect
      */
     private function manageUserCodes()
     {
-        global $DB;
+        global $DB, $CFG;
 
         /**
          * stdClass Object
@@ -109,7 +109,9 @@ class Connect
         $mdlUserExists = $DB->get_record('user', ['username' => $this->userInfo->id], 'id');
 
         if (!$mdlUserExists) {
-            throw new Exception('Usuário não cadastrado no Moodle');
+//            throw new Exception('Usuário não cadastrado no Moodle');
+            //neesgov logout because user is login in gov.br
+            redirect($CFG->wwwroot . '/auth/neesgov/logout.php?pass=1', 'Usuário não cadastrado no Moodle', 3);
         }
 
         $userTokenExists = $DB->get_record(self::TOKEN_TABLE_NAME, ['userid' => $mdlUserExists->id], 'id');

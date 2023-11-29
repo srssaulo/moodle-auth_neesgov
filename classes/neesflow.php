@@ -13,18 +13,16 @@ class neesflow
 {
 
 
-
-
     /**
      * @param object $userInfo {'id'=>$oidc->requestUserInfo('sub'),
-                                'email'=>$oidc->requestUserInfo('email'),
-                                'name'=>$oidc->requestUserInfo('name'),
-                                'picture}
+     * 'email'=>$oidc->requestUserInfo('email'),
+     * 'name'=>$oidc->requestUserInfo('name'),
+     * 'picture}
      * @return void
      */
     private function handlelogin($userInfo)
     {
-        global $DB;
+        global $DB, $CFG;
 
 
         // Do not continue if auth plugin is not enabled.
@@ -36,7 +34,7 @@ class neesflow
         $mdlUser = $DB->get_record('user', ['username' => trim($userInfo->id), 'deleted' => 0]);
 
         if (!$mdlUser) {
-            throw new \moodle_exception('User doesn\'t created in moodle', 'auth_neesgov');
+            redirect($CFG->wwwroot . '/auth/neesgov/logout.php?pass=1', 'Usuário não cadastrado no Moodle', 3);
         }
 
         if ($mdlUser->auth != 'neesgov') {//change user auth type to neesgov
@@ -44,7 +42,7 @@ class neesflow
             $DB->update_record('user', $mdlUser);
         }
 
-        if($userInfo->email != $mdlUser->email){ //user\'s email update
+        if ($userInfo->email != $mdlUser->email) { //user\'s email update
             $mdlUser->email = $userInfo->email;
         }
 
@@ -52,19 +50,23 @@ class neesflow
         $gov_firstname = strtok($userInfo->name, " ");
         $gov_lastname = strtok(null);
 
-        if($mdlUser->firstname != $gov_firstname){
+        if ($mdlUser->firstname != $gov_firstname) {
             $mdlUser->firstname = $gov_firstname;
         }
-        if($mdlUser->lastname != $gov_lastname){
+        if ($mdlUser->lastname != $gov_lastname) {
             $mdlUser->lastname = $gov_lastname;
         }
+
 
         //updating mdl user
         $DB->update_record('user', $mdlUser);
 
 
-        $user = authenticate_user_login($mdlUser->username, null, true);
+        $user = authenticate_user_login($mdlUser->username, $mdlUser->password, true);
         if (!empty($user)) {
+            if (get_user_preferences('auth_forcepasswordchange', 0, $user)) {
+                set_user_preference('auth_forcepasswordchange', 0, $user);
+            }
             complete_user_login($user);
         } else {
 
@@ -81,16 +83,17 @@ class neesflow
 
     /**
      * @param object $userInfo {'id'=>$oidc->requestUserInfo('sub'),
-                                'email'=>$oidc->requestUserInfo('email'),
-                                'name'=>$oidc->requestUserInfo('name'),
-                                'picture}
+     * 'email'=>$oidc->requestUserInfo('email'),
+     * 'name'=>$oidc->requestUserInfo('name'),
+     * 'picture}
      * @return void
      * @throws \moodle_exception
      */
     public function handleRedirect($userInfo)
     {
+        global $DB, $USER;
 
-        if(is_null($userInfo)){
+        if (is_null($userInfo)) {
             //if null  didn't make login correctly
             //return to login page
             redirect(new \moodle_url('/login'), 'login fail');
@@ -98,10 +101,13 @@ class neesflow
 
             $this->handlelogin($userInfo);
 
+            $USER->auth = 'manual';
+            $DB->update_record('user', $USER); //force manual auth change
+
             //its all right and user is redirected to dashboardo Moodle
             redirect(new \moodle_url('/my'));
 
-        }
+    }
 
 
 }
