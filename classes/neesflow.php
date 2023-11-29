@@ -39,7 +39,6 @@ class neesflow
 
         if ($mdlUser->auth != 'neesgov') {//change user auth type to neesgov
             $mdlUser->auth = 'neesgov';
-            $DB->update_record('user', $mdlUser);
         }
 
         if ($userInfo->email != $mdlUser->email) { //user\'s email update
