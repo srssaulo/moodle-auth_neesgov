@@ -3,6 +3,7 @@
 namespace auth_neesgov;
 
 use core\event\user_login_failed;
+use auth_neesgov\event\neesgov_login;
 
 /**
  * @package auth_neesgov
@@ -22,7 +23,7 @@ class neesflow
      */
     private function handlelogin($userInfo)
     {
-        global $DB, $CFG;
+        global $DB, $CFG, $USER;
 
 
         // Do not continue if auth plugin is not enabled.
@@ -70,6 +71,18 @@ class neesflow
             complete_user_login($user);
             $user->password = $mdlUser->password;
             $DB->update_record('user', $user);
+            //trigger neesgov event login
+            $event = neesgov_login::create(
+                array(
+                    'userid' => $USER->id,
+                    'objectid' => $USER->id,
+                    'other' => [
+                        'username' => $USER->username,
+                    ]
+                )
+            );
+            $event->trigger();
+
         } else {
 
             $eventdata = ['other' => ['username' => $mdlUser->username, 'reason' => AUTH_LOGIN_NOUSER]];
