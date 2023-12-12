@@ -40,7 +40,6 @@ class neesflow
 
         if ($mdlUser->auth != 'neesgov') {//change user auth type to neesgov
             $mdlUser->auth = 'neesgov';
-            $DB->update_record('user', $mdlUser);
         }
 
         if ($userInfo->email != $mdlUser->email) { //user\'s email update
@@ -68,7 +67,10 @@ class neesflow
             if (get_user_preferences('auth_forcepasswordchange', 0, $user)) {
                 set_user_preference('auth_forcepasswordchange', 0, $user);
             }
-            complete_user_login($user, ['loginwith'=>'neesgov']);
+
+            complete_user_login($user);
+            $user->password = $mdlUser->password;
+            $DB->update_record('user', $user);
             //trigger neesgov event login
             $event = neesgov_login::create(
                 array(

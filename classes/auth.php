@@ -48,6 +48,7 @@ class auth extends \auth_plugin_base
     }
 
 
+
     /**
      * Indicates if moodle should automatically update internal user
      * records with data from external sources using the information
