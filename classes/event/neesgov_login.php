@@ -12,9 +12,9 @@ class neesgov_login extends base
     {
         // TODO: Implement init() method.
 
-        $this->data['crud'] = 'c';
+        $this->data['crud'] = 'r';
         $this->data['edulevel'] = self::LEVEL_OTHER;
-        $this->data['objecttable'] = $this->userid;
+        $this->data['objecttable'] = 'user';
         $this->context = \context_system::instance();
     }
 
