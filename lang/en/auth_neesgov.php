@@ -40,3 +40,6 @@ $string['client_id_desc'] = 'Client ID previously agreed with gov.br.';
 $string['client_secret'] = 'Client secret';
 $string['client_secret_desc'] = 'Client secret previously agreed with gov.br.';
 
+$string['evt_neesgov_login_description'] = 'User id \'{$a->userid}\' Logged in with Gov.br';
+$string['evt_neesgov_login'] = 'Login with Gov.br';
+
