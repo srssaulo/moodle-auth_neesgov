@@ -12,8 +12,6 @@ use auth_neesgov\event\neesgov_login;
  */
 class neesflow
 {
-
-
     /**
      * @param object $userInfo {'id'=>$oidc->requestUserInfo('sub'),
      * 'email'=>$oidc->requestUserInfo('email'),
@@ -25,12 +23,10 @@ class neesflow
     {
         global $DB, $CFG, $USER;
 
-
         // Do not continue if auth plugin is not enabled.
         if (!is_enabled_auth('neesgov')) {
             throw new moodle_exception('erroroidcnotenabled', 'auth_neesgov', null, null, '1');
         }
-
 
         $mdlUser = $DB->get_record('user', ['username' => trim($userInfo->id), 'deleted' => 0]);
 
@@ -57,10 +53,8 @@ class neesflow
             $mdlUser->lastname = $gov_lastname;
         }
 
-
         //updating mdl user
         $DB->update_record('user', $mdlUser);
-
 
         $user = authenticate_user_login($mdlUser->username, $mdlUser->password, true);
         if (!empty($user)) {
@@ -94,7 +88,6 @@ class neesflow
         }
 
     }
-
 
     /**
      * @param object $userInfo {'id'=>$oidc->requestUserInfo('sub'),

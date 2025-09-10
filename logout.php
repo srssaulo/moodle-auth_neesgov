@@ -15,26 +15,28 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Single Sign Out end point.
- *
- * @package auth_neesgov
- * @copyright 2023 Saulo Sá <srssaulo@gmail.com>
- * @author Saulo Sá <srssaulo@gmail.com>
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * Plugin for gov.br authentication.
+ * Logout flow
+ * @package     auth_neesgov
+ * @copyright   2023 NEES/UFAL <https://www.nees.ufal.br/>
+ * @author      Saulo Sá <srssaulo@gmail.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require_once(__DIR__ . '/../../config.php');
-require  $CFG->dirroot.'/auth/neesgov/classes/Connect.php'; //TODO put in general place
+require($CFG->dirroot . '/auth/neesgov/classes/Connect.php');
 
+$pass = optional_param('pass', 0, PARAM_INT);
+
+require_login();
 
 $PAGE->set_url('/auth/neesgov/logout.php');
 $PAGE->set_context(context_system::instance());
 
-$pass = optional_param('pass', 0, PARAM_INT);
-if($pass){ //if true, we came back from gov.br
+if ($pass) {
+    // If true, we came back from gov.br!
     require_logout();
-    echo \auth_neesgov\Connect::logout_govbr();//auto send form
-
+    echo \auth_neesgov\Connect::logout_govbr();// Auto send form!
 }
 redirect(new moodle_url('/'));
 

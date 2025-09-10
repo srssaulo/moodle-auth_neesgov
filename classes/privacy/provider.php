@@ -13,19 +13,26 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Plugin for gov.br authentication.
+ * nuul provider policy
+ * @package     auth_neesgov
+ * @copyright   2023 NEES/UFAL <https://www.nees.ufal.br/>
+ * @author      Saulo Sá <srssaulo@gmail.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 namespace auth_neesgov\privacy;
 
 /**
- * @package auth_neesgov
- * @author Saulo Sá <srssaulo@gmail.com>
- * @copyright 2023 Saulo Sá <srssaulo@gmail.com>
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * Declare privacy class with null provider reason
  */
-class privacy implements \core_privacy\local\metadata\null_provider
-{
-    public static function get_reason(): string
-    {
+class privacy implements \core_privacy\local\metadata\null_provider {
+    /**
+     * Implements
+     * @return string
+     */
+    public static function get_reason(): string {
         return 'privacy:metadata';
     }
 }
-

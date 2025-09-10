@@ -15,12 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Anybody can login with any password.
- *
- * @package    auth_neesgov
- * @category   check
- * @copyright 2023 Saulo Sá <srssaulo@gmail.com>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * Plugin for gov.br authentication.
+ * Login flow
+ * @package     auth_neesgov
+ * @copyright   2023 NEES/UFAL <https://www.nees.ufal.br/>
+ * @author      Saulo Sá <srssaulo@gmail.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();

@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -16,11 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Open ID authentication.
+ * Plugin for gov.br authentication.
  *
- * @package auth_oauth2
- * @copyright 2017 Damyon Wiese
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @package     auth_neesgov
+ * @copyright   2023 NEES/UFAL <https://www.nees.ufal.br/>
+ * @author      Saulo Sá <srssaulo@gmail.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -28,15 +28,13 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/authlib.php');
 
 /**
- * Plugin for oauth2 authentication.
- *
- * @package auth_oauth2
- * @copyright 2017 Damyon Wiese
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * Start auth_neesgov reference
  */
-class auth_plugin_neesgov extends \auth_neesgov\auth
-{
+class auth_plugin_neesgov extends \auth_neesgov\auth {
 
+    /**
+     * define auth type name
+     */
     public function __construct() {
         $this->authtype = 'neesgov';
     }

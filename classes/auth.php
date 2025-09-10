@@ -15,39 +15,35 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Anobody can login with any password.
+ * Plugin for gov.br authentication.
  *
- * @package auth_neesgov
- * @copyright 2023 Saulo Sá <srssaulo@gmail.com>
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @package     auth_neesgov
+ * @copyright   2023 NEES/UFAL <https://www.nees.ufal.br/>
+ * @author      Saulo Sá <srssaulo@gmail.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace auth_neesgov;
 
-use core_analytics\user;
 use pix_icon;
 
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/authlib.php');
 
-use auth_neesgov\neesflow;
-
-class auth extends \auth_plugin_base
-{
-
+/**
+ * main auth class
+ */
+class auth extends \auth_plugin_base {
 
     /**
      * Returns true if this authentication plugin is "internal".
      *
      * @return bool Whether the plugin uses password hashes from Moodle user table for authentication.
      */
-    public function is_internal()
-    {
+    public function is_internal() {
         return false;
     }
-
-
 
     /**
      * Indicates if moodle should automatically update internal user
@@ -56,13 +52,18 @@ class auth extends \auth_plugin_base
      *
      * @return bool true means automatically copy data from ext to user table
      */
-    public function is_synchronised_with_external()
-    {
+    public function is_synchronised_with_external() {
         return true;
     }
 
-    public function loginpage_idp_list($wantsurl)
-    {
+    /**
+     * icon
+     * @param $wantsurl
+     * @return array[]
+     * @throws \coding_exception
+     * @throws \core\exception\moodle_exception
+     */
+    public function loginpage_idp_list($wantsurl) {
         $params = ['sesskey' => sesskey()];
 
         return [
@@ -70,7 +71,7 @@ class auth extends \auth_plugin_base
                 'url' => new \moodle_url('/auth/neesgov/login.php', $params),
                 'icon' => new pix_icon('neesgov', get_string('pluginname', 'auth_neesgov'), 'auth_neesgov'),
                 'name' => strip_tags(format_text('Entrar com o gov.br')),
-            ]
+            ],
         ];
     }
 
@@ -81,8 +82,7 @@ class auth extends \auth_plugin_base
      * @param string $password The password (with system magic quotes)
      * @return bool Authentication success or failure.
      */
-    public function user_login($username, $password = null)
-    {
+    public function user_login($username, $password = null) {
         global $CFG, $DB;
         // Short circuit for guest user.
         if (!empty($CFG->guestloginbutton) && $username === 'guest' && $password === 'guest') {
@@ -92,24 +92,26 @@ class auth extends \auth_plugin_base
         $code = optional_param('code', null, PARAM_RAW);
         $tokenrec = $DB->get_record('auth_neesgov_token', ['username' => $username]);
 
-        $userExists =  $DB->record_exists('user', ['username' => $username]);
+        $userexists = $DB->record_exists('user', ['username' => $username]);
 
         if (
-            $userExists &&
+            $userexists &&
             !empty($code) &&
             $tokenrec->authcode === $code
         ) {
             return true;
         }
         return false;
-
     }
 
-    public function logoutpage_hook()
-    {
+    /**
+     * Logout hook
+     * @return void
+     */
+    public function logoutpage_hook() {
         global  $CFG, $redirect, $USER;
 
-        // Only do this if the user is actually logged in via neesgov
+        // Only do this if the user is actually logged in via neesgov!
         if ($USER->auth == 'neesgov' || $USER->auth == 'manual') {
             $redirect = $CFG->wwwroot . '/auth/neesgov/logout.php?pass=1';
         }

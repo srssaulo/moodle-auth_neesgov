@@ -1,8 +1,29 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Plugin for gov.br authentication.
+ * gov.br connect steps
+ * @package     auth_neesgov
+ * @copyright   2023 NEES/UFAL <https://www.nees.ufal.br/>
+ * @author      Saulo Sá <srssaulo@gmail.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 namespace auth_neesgov;
 
-use enrol_self\self_test;
 use Exception;
 
 /**
@@ -12,59 +33,72 @@ use Exception;
  *
  * @author Saulo de Sá <srssaulo@gmail.com>
  */
-class Connect
-{
+class Connect {
 
+    /**
+     * Define plugin table name
+     */
     private const TOKEN_TABLE_NAME = 'auth_neesgov_token';
 
+    /**
+     * Response code time. See gov.br documentation
+     */
     private const RESPONSE_TYPE = 'code';
 
 
-    private const SCOPES = ['openid', 'email', 'profile']; // Escopos openid+email+profile+govbr_empresa+govbr_confiabilidades
+    /**
+     * Define scopes. See gov.br documentation
+     */
+    private const SCOPES = ['openid', 'email', 'profile'];// Escopos openid+email+profile+govbr_empresa+govbr_confiabilidades !
 
+    /**
+     * Response code challenge method. See gov.br documentation
+     */
     private const CODE_CHALLENGE_METHOD = "S256";
 
+    /**
+     * receive user info during connection
+     * @var null
+     */
+    private $userinfo = null;
 
-    private $userInfo = null;
-
-    private static function get_config_vars(){
+    /**
+     * Get plugin setting vars
+     * @return array
+     * @throws \dml_exception
+     */
+    private static function get_config_vars() {
         return [
-            'URL_PROVIDER'=> get_config('auth_neesgov', 'uri_provider'),
-            'REDIRECT_URI'=> get_config('auth_neesgov', 'redirect_uri'),
-            'POST_LOGOUT_REDIRECT_URI'=> get_config('auth_neesgov', 'post_logout_uri'),
-            'CLIENT_ID'=> get_config('auth_neesgov', 'client_id'),
-            'CLIENT_SECRET'=> get_config('auth_neesgov', 'client_secret'),
+            'URL_PROVIDER' => get_config('auth_neesgov', 'uri_provider'),
+            'REDIRECT_URI' => get_config('auth_neesgov', 'redirect_uri'),
+            'POST_LOGOUT_REDIRECT_URI' => get_config('auth_neesgov', 'post_logout_uri'),
+            'CLIENT_ID' => get_config('auth_neesgov', 'client_id'),
+            'CLIENT_SECRET' => get_config('auth_neesgov', 'client_secret'),
         ];
 
     }
-
 
     /**
      * Authenticate method using OpenId Connect Client
      * @throws OpenIDConnectClientException
      */
-    public function OpenIDAuthenticate()
-    {
+    public function openidauthenticate() {
 
-        $ENV = self::get_config_vars();
+        $env = self::get_config_vars();
 
         $oidc = new OpenIDConnectClient(
-            $ENV['URL_PROVIDER'],
-            $ENV['CLIENT_ID'],
-            $ENV['CLIENT_SECRET'],
+            $env['URL_PROVIDER'],
+            $env['CLIENT_ID'],
+            $env['CLIENT_SECRET'],
         );
 
-        $oidc->setRedirectURL($ENV['REDIRECT_URI']);
-
+        $oidc->setRedirectURL($env['REDIRECT_URI']);
 
         $oidc->setResponseTypes(self::RESPONSE_TYPE);
 
-
         $oidc->addScope(self::SCOPES);
 
-
         $oidc->setCodeChallengeMethod(self::CODE_CHALLENGE_METHOD);
-
 
         if ($oidc->authenticate() && isset($_REQUEST['code'])) {
             $subs = (object)[
@@ -77,9 +111,9 @@ class Connect
                 'expiry' => $oidc->getVerifiedClaims('exp'),
             ];
 
-            $this->userInfo = $subs;
+            $this->userinfo = $subs;
 
-            $this->manageUserCodes();
+            $this->manageusercodes();
         }
 
     }
@@ -89,84 +123,73 @@ class Connect
      * @return void
      * @throws \dml_exception
      */
-    private function manageUserCodes()
-    {
+    private function manageusercodes() {
         global $DB, $CFG;
 
-        /**
-         * stdClass Object
-         * (
-         * [id] => 06881435479
-         * [email] => saulo.rufino@nees.ufal.br
-         * [name] => Saulo Sa
-         * [picture] => https://sso.staging.acesso.gov.br/userinfo/picture
-         * [idtoken] => eyJraWQiOiJyc2ExIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIwNjg4MTQzNTQ3OSIsImVtYWlsX3ZlcmlmaWVkIjoidHJ1ZSIsImFtciI6WyJwYXNzd2QiXSwicHJvZmlsZSI6Imh0dHBzOlwvXC9zZXJ2aWNvcy5zdGFnaW5nLmFjZXNzby5nb3YuYnJcLyIsImtpZCI6InJzYTEiLCJpc3MiOiJodHRwczpcL1wvc3NvLnN0YWdpbmcuYWNlc3NvLmdvdi5iclwvIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiMDY4ODE0MzU0NzkiLCJub25jZSI6IjYwNjdkOTY0ZmQzMzgxZjJlNWMyNWI0NTAxY2E5NGVjIiwicGljdHVyZSI6Imh0dHBzOlwvXC9zc28uc3RhZ2luZy5hY2Vzc28uZ292LmJyXC91c2VyaW5mb1wvcGljdHVyZSIsImF1ZCI6ImFjLmF2YS5yaWVoLWhtZy5uZWVzLnVmYWwuYnIiLCJhdXRoX3RpbWUiOjE2ODg1MDIyNzIsInNjb3BlIjpbIm9wZW5pZCIsInByb2ZpbGUiLCJlbWFpbCJdLCJuYW1lIjoiU2F1bG8gU2EiLCJleHAiOjE2ODg1MDQ3ODMsImlhdCI6MTY4ODUwNDE4MywianRpIjoiNDQ3ZTQ4MWEtNDFjZi00ZTIwLTgwZmMtNTE0MjQ2ZDQ4MWI0IiwiZW1haWwiOiJzYXVsby5ydWZpbm9AbmVlcy51ZmFsLmJyIn0.p904kUDMyDWdzqfTVj_34J4ID28AaTmmOZYJWShZREKpTrhC_0sGj5nudZfMBUChTs3I2d8NDAeI5XV47bjrgJPIDkIDSQQWK_nQaMdivdJZ4Hjix9RTus4z1775fAJj6Mq2PFBBgf8EJ0yIrHTvEj2V3txViHazgQX8ar_5JvqDPxuIWMfGF3MDT44-W5r62-WQXM-De6UTqL4ThgXDykbicD0sC9MWSxWx3YIV0HrddYo5z6pa4HQx20Hdxo6LvMpLVW_9xSmB8G5M1Hwc1mDGHcmC6JahElYzKq2db002Mm4qjjw22D_fvhbSh-7TRvXtnJE3BR_nYEytdoc5wA
-         * [authcode] => eyJraWQiOiJjb2RlQ3J5cHRvZ3JhcGh5IiwiYWxnIjoiZGlyIiwiZW5jIjoiQTI1NkdDTSJ9..ABpxCgolERzIZyYs.fBQ6zH04R7pS5Pj9fAkJF0jBfuKQF9upaZZfjD9Zk10LGQ.7akSFi7MoicT02yY6R9RyA
-         * [expiry] => 1688504783
-         * )
-         */
+        $mdluserexists = $DB->get_record('user', ['username' => $this->userinfo->id], 'id');
 
-        $mdlUserExists = $DB->get_record('user', ['username' => $this->userInfo->id], 'id');
-
-        if (!$mdlUserExists) {
-//            throw new Exception('Usuário não cadastrado no Moodle');
-            //neesgov logout because user is login in gov.br
-            redirect($CFG->wwwroot . '/auth/neesgov/logout.php?pass=1', 'Usuário não cadastrado no Moodle', 3, \core\output\notification::NOTIFY_ERROR);
+        if (!$mdluserexists) {
+            // Neesgov logout because user is login in gov.br!
+            redirect(
+                $CFG->wwwroot . '/auth/neesgov/logout.php?pass=1',
+                'Usuário não cadastrado no Moodle',
+                3,
+                \core\output\notification::NOTIFY_ERROR);
         }
 
-        $userTokenExists = $DB->get_record(self::TOKEN_TABLE_NAME, ['userid' => $mdlUserExists->id], 'id');
+        $usertokenexists = $DB->get_record(self::TOKEN_TABLE_NAME, ['userid' => $mdluserexists->id], 'id');
 
-        if (!$userTokenExists) {
-            // Store
+        if (!$usertokenexists) {
+            // Store!
             $DB->insert_record(self::TOKEN_TABLE_NAME,
                 (object)[
-                    'username'=>$this->userInfo->id,
-                    'userid'=>$mdlUserExists->id,
-                    'authcode'=>$this->userInfo->authcode,
-                    'expiry'=>$this->userInfo->expiry,
-                    'picture'=>$this->userInfo->picture,
-                    'idtoken'=>$this->userInfo->idtoken,
+                    'username' => $this->userinfo->id,
+                    'userid' => $mdluserexists->id,
+                    'authcode' => $this->userinfo->authcode,
+                    'expiry' => $this->userinfo->expiry,
+                    'picture' => $this->userinfo->picture,
+                    'idtoken' => $this->userinfo->idtoken,
                 ]);
 
         } else {
-            // Update
+            // Update!
             $DB->update_record(self::TOKEN_TABLE_NAME,
                 (object)[
-                    'id'=>$userTokenExists->id,
-//                    'username'=>$this->userInfo->username,
-                    'userid'=>$mdlUserExists->id,
-                    'authcode'=>$this->userInfo->authcode,
-                    'expiry'=>$this->userInfo->expiry,
-                    'picture'=>$this->userInfo->picture,
-                    'idtoken'=>$this->userInfo->idtoken,
+                    'id' => $usertokenexists->id,
+                    'userid' => $mdluserexists->id,
+                    'authcode' => $this->userinfo->authcode,
+                    'expiry' => $this->userinfo->expiry,
+                    'picture' => $this->userinfo->picture,
+                    'idtoken' => $this->userinfo->idtoken,
                 ]);
         }
-
-
     }
 
-    public static function logout_govbr(){
+    /**
+     * When logout in moodle, either logout in gov.br
+     * @return string
+     */
+    public static function logout_govbr() {
 
-        $ENV = self::get_config_vars();
+        $env = self::get_config_vars();
 
-        $uri_provider_logout = $ENV['URL_PROVIDER'].'/logout';
-        $post_logout_redirect_uri = $ENV['POST_LOGOUT_REDIRECT_URI'];
-        $action = $uri_provider_logout."?post_logout_redirect_uri=".$post_logout_redirect_uri;
+        $uriproviderlogout = $env['URL_PROVIDER'].'/logout';
+        $postlogoutredirecturi = $env['POST_LOGOUT_REDIRECT_URI'];
+        $action = $uriproviderlogout."?post_logout_redirect_uri=".$postlogoutredirecturi;
         return <<<HTML
-        <script type="text/javascript">       
+        <script type="text/javascript">
             window.location.href='{$action}';
         </script>
-    
 HTML;
 
     }
 
-
-    public function getUserInfo()
-    {
-        return $this->userInfo;
+    /**
+     * get user info
+     */
+    public function getuserinfo() {
+        return $this->userinfo;
     }
-
 
     /**
      * Verify if code is expired
@@ -174,13 +197,9 @@ HTML;
      * @return void
      * @throws Exception
      */
-    public static function codeExpired(int $expire)
-    {
+    public static function codeexpired(int $expire) {
         if (time() > $expire) {
             throw new Exception('code expired');
         }
-
     }
-
-
 }

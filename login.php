@@ -15,41 +15,35 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Nees GOV.BR authentication. This file is a simple login entry point for GOV.BR identity providers.
- *
- * @package auth_neesgov
- * @copyright 2023 Saulo Sá <srssaulo@gmail.com>
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * Plugin for gov.br authentication.
+ * Login flow
+ * @package     auth_neesgov
+ * @copyright   2023 NEES/UFAL <https://www.nees.ufal.br/>
+ * @author      Saulo Sá <srssaulo@gmail.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require_once('../../config.php');
 
-require_once $CFG->dirroot."/auth/neesgov/classes/Connect.php";
-require_once $CFG->dirroot."/auth/neesgov/classes/OpenIDConnectClient.php";
+require_once($CFG->dirroot."/auth/neesgov/classes/Connect.php");
+require_once($CFG->dirroot."/auth/neesgov/classes/OpenIDConnectClient.php");
 
 use auth_neesgov\Connect;
 use auth_neesgov\neesflow;
 
-//$issuerid = required_param('id', PARAM_INT);
 $wantsurl = new moodle_url(optional_param('wantsurl', '', PARAM_URL));
 
 $PAGE->set_context(context_system::instance());
 
-//$PAGE->set_url(new moodle_url('/auth/neesgov/login.php', ['id' => $issuerid]));
 $PAGE->set_url(new moodle_url('/auth/neesgov/login.php'));
 $PAGE->set_pagelayout('popup');
 
-
 $returnparams = ['wantsurl' => $wantsurl, 'sesskey' => sesskey()];
-
 
 $cn = new Connect();
 
-
-$cn->OpenIDAuthenticate();
-
+$cn->openidauthenticate();
 
 $neesflow = new neesflow();
 
-
-$neesflow->handleRedirect($cn->getUserInfo());
+$neesflow->handleRedirect($cn->getuserinfo());

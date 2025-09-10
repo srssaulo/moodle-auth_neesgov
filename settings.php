@@ -15,12 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Plugin for gov.br authentication.
  * Admin settings and defaults.
- *
- * @package auth_neesgov
- * @author Saulo Sá <srssaulo@gmail.com>
- * @copyright  2023 NEES/RIEH <https://rieh.nees.ufal.br/>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     auth_neesgov
+ * @copyright   2023 NEES/UFAL <https://www.nees.ufal.br/>
+ * @author      Saulo Sá <srssaulo@gmail.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die;
@@ -29,27 +29,41 @@ if ($ADMIN->fulltree) {
     global $CFG;
 
     // Introductory explanation.
-    $settings->add(new admin_setting_heading('auth_neesgov/pluginname', '',
+    $settings->add(new admin_setting_heading('auth_neesgov/pluginname',
+        '',
         get_string('generaldesc', 'auth_neesgov')));
 
-
-
     $settings->add(new admin_setting_configtext('auth_neesgov/uri_provider',
-       get_string('uri_provider', 'auth_neesgov'),  get_string('uri_provider_desc', 'auth_neesgov'), 'https://sso.staging.acesso.gov.br' , PARAM_URL));
+        get_string('uri_provider', 'auth_neesgov'),
+        get_string('uri_provider_desc', 'auth_neesgov'),
+        'https://sso.staging.acesso.gov.br' , PARAM_URL));
 
     $settings->add(new admin_setting_configtext('auth_neesgov/redirect_uri',
-        get_string('redirect_uri', 'auth_neesgov'),  get_string('redirect_uri_desc', 'auth_neesgov'), "{$CFG->wwwroot}/auth/neesgov/login.php" , PARAM_URL));
+        get_string('redirect_uri', 'auth_neesgov'),
+        get_string('redirect_uri_desc', 'auth_neesgov'),
+        "{$CFG->wwwroot}/auth/neesgov/login.php",
+        PARAM_URL));
 
     $settings->add(new admin_setting_configtext('auth_neesgov/post_logout_uri',
-        get_string('post_logout_uri', 'auth_neesgov'),  get_string('post_logout_uri_desc', 'auth_neesgov'), "{$CFG->wwwroot}/auth/neesgov/logout.php" , PARAM_URL));
+        get_string('post_logout_uri', 'auth_neesgov'),
+        get_string('post_logout_uri_desc', 'auth_neesgov'),
+        "{$CFG->wwwroot}/auth/neesgov/logout.php",
+        PARAM_URL));
 
     $settings->add(new admin_setting_configtext('auth_neesgov/client_id',
-        get_string('client_id', 'auth_neesgov'),  get_string('client_id_desc', 'auth_neesgov'), '' , PARAM_RAW));
+        get_string('client_id', 'auth_neesgov'),
+        get_string('client_id_desc', 'auth_neesgov'),
+        '' ,
+        PARAM_RAW));
 
     $settings->add(new admin_setting_configtext('auth_neesgov/client_secret',
-        get_string('client_secret', 'auth_neesgov'),  get_string('client_secret_desc', 'auth_neesgov'), '' , PARAM_TEXT));
+        get_string('client_secret', 'auth_neesgov'),
+        get_string('client_secret_desc', 'auth_neesgov'),
+        '',
+        PARAM_TEXT));
 
     $settings->add(new admin_setting_configcheckbox('auth_neesgov/auth_type_change',
-        get_string('auth_type_change', 'auth_neesgov'),  get_string('auth_type_change_desc', 'auth_neesgov'), 1));
-
+        get_string('auth_type_change', 'auth_neesgov'),
+        get_string('auth_type_change_desc', 'auth_neesgov'),
+        1));
 }
