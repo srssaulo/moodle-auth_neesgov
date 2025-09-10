@@ -39,8 +39,10 @@ $string['client_id'] = 'Client ID';
 $string['client_id_desc'] = 'Client ID previously agreed with gov.br.';
 $string['client_secret'] = 'Client secret';
 $string['client_secret_desc'] = 'Client secret previously agreed with gov.br.';
-
 $string['evt_neesgov_login_description'] = 'User id \'{$a->userid}\' Logged in with Gov.br';
 $string['evt_neesgov_login'] = 'Login with Gov.br';
+
+$string['auth_type_change'] = 'Change to Manual auth type';
+$string['auth_type_change_desc'] = 'After login, change auth type to manual';
 
 $string['privacy:metadata'] = 'The auth neesgov plugin only uses user data existing in moodle. Furthermore, stores temporary gov auth data';

@@ -108,6 +108,8 @@ class neesflow
     {
         global $DB, $USER;
 
+        $auth_type_change = get_config('auth_neesgov', 'auth_type_change');
+
         if (is_null($userInfo)) {
             //if null  didn't make login correctly
             //return to login page
@@ -116,12 +118,13 @@ class neesflow
 
             $this->handlelogin($userInfo);
 
-            $USER->auth = 'manual';
-            $DB->update_record('user', $USER); //force manual auth change
+            if($auth_type_change) { //if this conf is true, change auth type to manual after login with neesgov
+                $USER->auth = 'manual';
+                $DB->update_record('user', $USER); //force manual auth change
+            }
 
             //its all right and user is redirected to dashboardo Moodle
             redirect(new \moodle_url('/my'));
-
     }
 
 

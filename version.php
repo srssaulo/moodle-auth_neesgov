@@ -18,13 +18,13 @@
 /**
  * Version information
  *
- * @package    auth_none
+ * @package    auth_neesgov
  * @copyright  2023 Saulo Sá <srssaulo@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2023020604.05;        // The current plugin version (Date: YYYYMMDDXX).
+$plugin->version = 2023020604.06;        // The current plugin version (Date: YYYYMMDDXX).
 $plugin->requires = 2022041903;        // Requires this Moodle version.
 $plugin->component = 'auth_neesgov';       // Full name of the plugin (used for diagnostics)
