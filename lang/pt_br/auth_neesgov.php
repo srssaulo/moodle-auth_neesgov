@@ -43,3 +43,6 @@ $string['client_secret_desc'] = 'Client secret previamente definida com o Gov.br
 
 $string['evt_neesgov_login_description'] = 'O usuário com id \'{$a->userid}\' logou usando o Gov.br';
 $string['evt_neesgov_login'] = 'Login com Gov.br';
+
+
+$string['privacy:metadata'] = 'O plugin de autenticação neesgov não guarda dados novos ou permanentes dos usuários. O plugin acessa dados já existentes no Moodle além de armazenar dados temporários de acesso.'; //TODO adjust

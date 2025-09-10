@@ -43,3 +43,4 @@ $string['client_secret_desc'] = 'Client secret previously agreed with gov.br.';
 $string['evt_neesgov_login_description'] = 'User id \'{$a->userid}\' Logged in with Gov.br';
 $string['evt_neesgov_login'] = 'Login with Gov.br';
 
+$string['privacy:metadata'] = 'The auth neesgov plugin only uses user data existing in moodle. Furthermore, stores temporary gov auth data';
