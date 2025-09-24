@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin for gov.br authentication.
+ * Plugin for gov br authentication.
  * Login event class
  * @package     auth_neesgov
  * @copyright   2023 NEES/UFAL https://www.nees.ufal.br/

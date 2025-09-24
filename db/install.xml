@@ -7,11 +7,11 @@
         <TABLE NAME="auth_neesgov_token" COMMENT="Stores tokens.">
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-                <FIELD NAME="username" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT="must be the same id gov.br"/>
+                <FIELD NAME="username" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT="must be the same id gov br"/>
                 <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="moodle userid"/>
                 <FIELD NAME="authcode" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="auth code"/>
                 <FIELD NAME="expiry" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="code expiry"/>
-                <FIELD NAME="picture" TYPE="char" LENGTH="350" NOTNULL="false" SEQUENCE="false" COMMENT="user picture of gov.br"/>
+                <FIELD NAME="picture" TYPE="char" LENGTH="350" NOTNULL="false" SEQUENCE="false" COMMENT="user picture of gov br"/>
                 <FIELD NAME="idtoken" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="id token"/>
             </FIELDS>
             <KEYS>

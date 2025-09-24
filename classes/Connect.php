@@ -15,8 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin for gov.br authentication.
- * gov.br connect steps
+ * Plugin for gov br authentication.
+ * gov br connect steps
  * @package     auth_neesgov
  * @copyright   2023 NEES/UFAL https://www.nees.ufal.br/
  * @author      Saulo Sá (srssaulo@gmail.com)
@@ -41,18 +41,18 @@ class Connect {
     private const TOKEN_TABLE_NAME = 'auth_neesgov_token';
 
     /**
-     * Response code time. See gov.br documentation
+     * Response code time. See gov br documentation
      */
     private const RESPONSE_TYPE = 'code';
 
 
     /**
-     * Define scopes. See gov.br documentation
+     * Define scopes. See gov br documentation
      */
     private const SCOPES = ['openid', 'email', 'profile'];// Escopos openid+email+profile+govbr_empresa+govbr_confiabilidades !
 
     /**
-     * Response code challenge method. See gov.br documentation
+     * Response code challenge method. See gov br documentation
      */
     private const CODE_CHALLENGE_METHOD = "S256";
 
