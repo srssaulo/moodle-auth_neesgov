@@ -1,6 +1,6 @@
 Log in to Moodle using gov br.
 =========================================
-
+🇧🇷
 Auth plugin for organising simple one way SSO(single sign on) between moodle and gov br.
 
 Using
