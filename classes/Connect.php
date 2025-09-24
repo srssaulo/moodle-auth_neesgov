@@ -18,8 +18,8 @@
  * Plugin for gov.br authentication.
  * gov.br connect steps
  * @package     auth_neesgov
- * @copyright   2023 NEES/UFAL <https://www.nees.ufal.br/>
- * @author      Saulo Sá <srssaulo@gmail.com>
+ * @copyright   2023 NEES/UFAL https://www.nees.ufal.br/
+ * @author      Saulo Sá (srssaulo@gmail.com)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace auth_neesgov;
@@ -31,7 +31,7 @@ use Exception;
  * Steps docs:
  * <https://manual-roteiro-integracao-login-unico.servicos.gov.br/pt/stable/iniciarintegracao.html>
  *
- * @author Saulo de Sá <srssaulo@gmail.com>
+ * @author Saulo de Sá (srssaulo@gmail.com)
  */
 class Connect {
 

@@ -7,7 +7,7 @@ use auth_neesgov\event\neesgov_login;
 
 /**
  * @package auth_neesgov
- * @copyright 2023 Saulo Sá <srssaulo@gmail.com>
+ * @copyright 2023 Saulo Sá (srssaulo@gmail.com)
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
  */
 class neesflow

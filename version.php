@@ -18,8 +18,8 @@
  * Plugin for gov.br authentication.
  * Version information
  * @package     auth_neesgov
- * @copyright   2023 NEES/UFAL <https://www.nees.ufal.br/>
- * @author      Saulo Sá <srssaulo@gmail.com>
+ * @copyright   2023 NEES/UFAL https://www.nees.ufal.br/
+ * @author      Saulo Sá (srssaulo@gmail.com)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

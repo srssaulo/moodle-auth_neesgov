@@ -841,7 +841,7 @@ class OpenIDConnectClient
     }
 
     /**
-     * @author Saulo Sá <srssaulo@gmail.com>
+     * @author Saulo Sá (srssaulo@gmail.com)
      * @param $plainText
      * @return string
      */
