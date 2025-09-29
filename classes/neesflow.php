@@ -1,4 +1,27 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Plugin for gov br authentication.
+ * gov br connect steps
+ * @package     auth_neesgov
+ * @copyright   2023 NEES/UFAL https://www.nees.ufal.br/
+ * @author      Saulo Sá (srssaulo@gmail.com)
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 namespace auth_neesgov;
 
@@ -6,21 +29,21 @@ use core\event\user_login_failed;
 use auth_neesgov\event\neesgov_login;
 
 /**
+ * implements nees connection flow
  * @package auth_neesgov
  * @copyright 2023 Saulo Sá (srssaulo@gmail.com)
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
  */
-class neesflow
-{
+class neesflow {
     /**
+     * handle user login
      * @param object $userInfo {'id'=>$oidc->requestUserInfo('sub'),
      * 'email'=>$oidc->requestUserInfo('email'),
      * 'name'=>$oidc->requestUserInfo('name'),
      * 'picture}
      * @return void
      */
-    private function handlelogin($userInfo)
-    {
+    private function handlelogin($userinfo) {
         global $DB, $CFG, $USER;
 
         // Do not continue if auth plugin is not enabled.
@@ -28,58 +51,58 @@ class neesflow
             throw new moodle_exception('erroroidcnotenabled', 'auth_neesgov', null, null, '1');
         }
 
-        $mdlUser = $DB->get_record('user', ['username' => trim($userInfo->id), 'deleted' => 0]);
+        $mdluser = $DB->get_record('user', ['username' => trim($userinfo->id), 'deleted' => 0]);
 
-        if (!$mdlUser) {
+        if (!$mdluser) {
             redirect($CFG->wwwroot . '/auth/neesgov/logout.php?pass=1', get_string('user_not_registred', 'auth_neesgov'), 3);
         }
 
-        if ($mdlUser->auth != 'neesgov') {//change user auth type to neesgov
-            $mdlUser->auth = 'neesgov';
+        if ($mdluser->auth != 'neesgov') {// Change user auth type to neesgov.
+            $mdluser->auth = 'neesgov';
         }
 
-        if ($userInfo->email != $mdlUser->email) { //user\'s email update
-            $mdlUser->email = $userInfo->email;
+        if ($userinfo->email != $mdluser->email) { // User\'s email update.
+            $mdluser->email = $userinfo->email;
         }
 
-        //updating first and last name gov.br
-        $gov_firstname = strtok($userInfo->name, " ");
-        $gov_lastname = strtok(null);
+        // Updating first and last name gov.br.
+        $govfirstname = strtok($userinfo->name, " ");
+        $govlastname = strtok(null);
 
-        if ($mdlUser->firstname != $gov_firstname) {
-            $mdlUser->firstname = $gov_firstname;
+        if ($mdluser->firstname != $govfirstname) {
+            $mdluser->firstname = $govfirstname;
         }
-        if ($mdlUser->lastname != $gov_lastname) {
-            $mdlUser->lastname = $gov_lastname;
+        if ($mdluser->lastname != $govlastname) {
+            $mdluser->lastname = $govlastname;
         }
 
-        //updating mdl user
-        $DB->update_record('user', $mdlUser);
+        // Updating mdl user.
+        $DB->update_record('user', $mdluser);
 
-        $user = authenticate_user_login($mdlUser->username, $mdlUser->password, true);
+        $user = authenticate_user_login($mdluser->username, $mdluser->password, true);
         if (!empty($user)) {
             if (get_user_preferences('auth_forcepasswordchange', 0, $user)) {
                 set_user_preference('auth_forcepasswordchange', 0, $user);
             }
 
             complete_user_login($user);
-            $user->password = $mdlUser->password;
+            $user->password = $mdluser->password;
             $DB->update_record('user', $user);
-            //trigger neesgov event login
+            // Trigger neesgov event login.
             $event = neesgov_login::create(
-                array(
+                [
                     'userid' => $USER->id,
                     'objectid' => $USER->id,
                     'other' => [
                         'username' => $USER->username,
-                    ]
-                )
+                    ],
+                ]
             );
             $event->trigger();
 
         } else {
 
-            $eventdata = ['other' => ['username' => $mdlUser->username, 'reason' => AUTH_LOGIN_NOUSER]];
+            $eventdata = ['other' => ['username' => $mdluser->username, 'reason' => AUTH_LOGIN_NOUSER]];
             $event = user_login_failed::create($eventdata);
             $event->trigger();
 
@@ -90,35 +113,34 @@ class neesflow
     }
 
     /**
-     * @param object $userInfo {'id'=>$oidc->requestUserInfo('sub'),
+     * handle redirect flow
+     * @param object $userinfo {'id'=>$oidc->requestUserInfo('sub'),
      * 'email'=>$oidc->requestUserInfo('email'),
      * 'name'=>$oidc->requestUserInfo('name'),
      * 'picture}
      * @return void
      * @throws \moodle_exception
      */
-    public function handleRedirect($userInfo)
-    {
+    public function handleredirect($userinfo) {
         global $DB, $USER;
 
-        $auth_type_change = get_config('auth_neesgov', 'auth_type_change');
+        $authtypechange = get_config('auth_neesgov', 'auth_type_change');
 
-        if (is_null($userInfo)) {
-            //if null  didn't make login correctly
-            //return to login page
+        if (is_null($userinfo)) {
+            // If null  didn't make login correctly.
+            // Return to login page.
             redirect(new \moodle_url('/login'), get_string('login_fail', 'auth_neesgov'));
         }
 
-            $this->handlelogin($userInfo);
+        $this->handlelogin($userinfo);
 
-            if($auth_type_change) { //if this conf is true, change auth type to manual after login with neesgov
-                $USER->auth = 'manual';
-                $DB->update_record('user', $USER); //force manual auth change
-            }
+        if ($authtypechange) { // If this conf is true, change auth type to manual after login with neesgov.
+            $USER->auth = 'manual';
+            $DB->update_record('user', $USER); // Force manual auth change!
+        }
 
-            //its all right and user is redirected to dashboardo Moodle
-            redirect(new \moodle_url('/my'));
+        // Its all right and user is redirected to dashboard Moodle.
+        redirect(new \moodle_url('/my'));
     }
-
 
 }

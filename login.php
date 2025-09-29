@@ -46,4 +46,4 @@ $cn->openidauthenticate();
 
 $neesflow = new neesflow();
 
-$neesflow->handleRedirect($cn->getuserinfo());
+$neesflow->handleredirect($cn->getuserinfo());
