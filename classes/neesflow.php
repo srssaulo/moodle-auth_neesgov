@@ -31,7 +31,7 @@ class neesflow
         $mdlUser = $DB->get_record('user', ['username' => trim($userInfo->id), 'deleted' => 0]);
 
         if (!$mdlUser) {
-            redirect($CFG->wwwroot . '/auth/neesgov/logout.php?pass=1', 'Usuário não cadastrado no Moodle', 3);
+            redirect($CFG->wwwroot . '/auth/neesgov/logout.php?pass=1', get_string('user_not_registred', 'auth_neesgov'), 3);
         }
 
         if ($mdlUser->auth != 'neesgov') {//change user auth type to neesgov
@@ -84,7 +84,7 @@ class neesflow
             $event->trigger();
 
             // There was a problem in authenticate_user_login.
-            throw new \moodle_exception('errorauthgeneral', 'auth_neesgov', null, null, '2');
+            throw new \moodle_exception('login_fail', 'auth_neesgov', null, null, '2');
         }
 
     }
@@ -106,7 +106,7 @@ class neesflow
         if (is_null($userInfo)) {
             //if null  didn't make login correctly
             //return to login page
-            redirect(new \moodle_url('/login'), 'login fail');
+            redirect(new \moodle_url('/login'), get_string('login_fail', 'auth_neesgov'));
         }
 
             $this->handlelogin($userInfo);
