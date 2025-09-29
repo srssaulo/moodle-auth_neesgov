@@ -33,7 +33,7 @@ use Exception;
  *
  * @author Saulo de Sá (srssaulo@gmail.com)
  */
-class Connect {
+class connect {
 
     /**
      * Define plugin table name

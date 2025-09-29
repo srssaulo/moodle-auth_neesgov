@@ -24,7 +24,7 @@
  */
 
 require_once(__DIR__ . '/../../config.php');
-require($CFG->dirroot . '/auth/neesgov/classes/Connect.php');
+require($CFG->dirroot . '/auth/neesgov/classes/connect.php');
 
 $pass = optional_param('pass', 0, PARAM_INT);
 
@@ -36,7 +36,7 @@ $PAGE->set_context(context_system::instance());
 if ($pass) {
     // If true, we came back from gov.br!
     require_logout();
-    echo \auth_neesgov\Connect::logout_govbr();// Auto send form!
+    echo \auth_neesgov\connect::logout_govbr();// Auto send form!
 }
 redirect(new moodle_url('/'));
 

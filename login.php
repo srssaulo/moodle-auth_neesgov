@@ -25,10 +25,10 @@
 
 require_once('../../config.php');
 
-require_once($CFG->dirroot."/auth/neesgov/classes/Connect.php");
+require_once($CFG->dirroot."/auth/neesgov/classes/connect.php");
 require_once($CFG->dirroot."/auth/neesgov/classes/OpenIDConnectClient.php");
 
-use auth_neesgov\Connect;
+use auth_neesgov\connect;
 use auth_neesgov\neesflow;
 
 $wantsurl = new moodle_url(optional_param('wantsurl', '', PARAM_URL));
@@ -40,7 +40,7 @@ $PAGE->set_pagelayout('popup');
 
 $returnparams = ['wantsurl' => $wantsurl, 'sesskey' => sesskey()];
 
-$cn = new Connect();
+$cn = new connect();
 
 $cn->openidauthenticate();
 
