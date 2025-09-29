@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<libraries>
+    <library>
+        <location>classes/OpenIDConnectClient.php</location>
+        <name>OpenIDConnectClient for PHP5</name>
+        <version>1.0.0</version>
+        <license>Apache</license>
+        <licenseversion>2.0</licenseversion>
+    </library>
+</libraries>
