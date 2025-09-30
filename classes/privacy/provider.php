@@ -22,17 +22,31 @@
  * @author      Saulo Sá (srssaulo@gmail.com)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace auth_neesgov\privacy;
+
+use core_privacy\local\metadata\collection;
 
 /**
  * Declare privacy class with null provider reason
  */
-class privacy implements \core_privacy\local\metadata\null_provider {
-    /**
-     * Implements
-     * @return string
-     */
-    public static function get_reason(): string {
-        return 'privacy:metadata';
+class privacy implements \core_privacy\local\metadata\provider {
+
+    public static function get_metadata(collection $collection): collection {
+        $collection->add_database_table(
+            'auth_neesgov_token',
+            [
+                'userid' => 'privacy:metadata:auth_neesgov_token:userid',
+                'username' => 'privacy:metadata:auth_neesgov_token:username',
+                'authcode' => 'privacy:metadata:auth_neesgov_token:authcode',
+                'expiry' => 'privacy:metadata:auth_neesgov_token:expiry',
+                'picture' => 'privacy:metadata:auth_neesgov_token:picture',
+                'idtoken' => 'privacy:metadata:auth_neesgov_token:idtoken',
+            ],
+            'privacy:metadata:auth_neesgov_token'
+        );
+
+
+        return $collection;
     }
 }
