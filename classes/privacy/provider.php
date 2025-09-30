@@ -26,12 +26,19 @@
 namespace auth_neesgov\privacy;
 
 use core_privacy\local\metadata\collection;
+use core_privacy\local\request\approved_contextlist;
 
 /**
  * Declare privacy class with null provider reason
  */
 class privacy implements \core_privacy\local\metadata\provider {
 
+    /**
+     * Get information about the user data stored by this plugin.
+     *
+     * @param  collection $collection An object for storing metadata.
+     * @return collection The metadata.
+     */
     public static function get_metadata(collection $collection): collection {
         $collection->add_database_table(
             'auth_neesgov_token',
@@ -46,7 +53,43 @@ class privacy implements \core_privacy\local\metadata\provider {
             'privacy:metadata:auth_neesgov_token'
         );
 
-
         return $collection;
     }
+
+    /**
+     * Delete all user data for this user only.
+     *
+     * @param  approved_contextlist $contextlist The list of approved contexts for a user.
+     */
+    public static function delete_data_for_user(approved_contextlist $contextlist) {
+        if (empty($contextlist->count())) {
+            return;
+        }
+        $userid = $contextlist->get_user()->id;
+        foreach ($contextlist->get_contexts() as $context) {
+            if ($context->contextlevel != CONTEXT_USER) {
+                continue;
+            }
+            if ($context->instanceid == $userid) {
+                // Because we only use user contexts the instance ID is the user ID.
+                static::delete_user_data($context->instanceid);
+            }
+        }
+    }
+
+    /**
+     * This does the deletion of user data for the auth_neesgov.
+     *
+     * @param  int $userid The user ID
+     */
+    protected static function delete_user_data(int $userid) {
+        global $DB;
+
+        // Because we only use user contexts the instance ID is the user ID.
+        $DB->delete_records('auth_neesgov_token', ['userid' => $userid]);
+    }
+
+
+
+
 }
