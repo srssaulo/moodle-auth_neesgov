@@ -27,16 +27,18 @@ namespace auth_neesgov\privacy;
 
 use core_privacy\local\metadata\collection;
 use core_privacy\local\request\approved_contextlist;
+use core_privacy\local\request\contextlist;
 
 /**
  * Declare privacy class with null provider reason
  */
-class privacy implements \core_privacy\local\metadata\provider {
+class provider implements \core_privacy\local\metadata\provider,
+    \core_privacy\local\request\plugin\provider {
 
     /**
      * Get information about the user data stored by this plugin.
      *
-     * @param  collection $collection An object for storing metadata.
+     * @param collection $collection An object for storing metadata.
      * @return collection The metadata.
      */
     public static function get_metadata(collection $collection): collection {
@@ -59,7 +61,7 @@ class privacy implements \core_privacy\local\metadata\provider {
     /**
      * Delete all user data for this user only.
      *
-     * @param  approved_contextlist $contextlist The list of approved contexts for a user.
+     * @param approved_contextlist $contextlist The list of approved contexts for a user.
      */
     public static function delete_data_for_user(approved_contextlist $contextlist) {
         if (empty($contextlist->count())) {
@@ -78,9 +80,45 @@ class privacy implements \core_privacy\local\metadata\provider {
     }
 
     /**
+     * Delete one user in context
+     *
+     *
+     * @param  \context $context The context to delete data for.
+     */
+    public static function delete_data_for_all_users_in_context(\context $context) {
+    }
+
+    /**
+     * Return all contexts for this userid. In this situation the user context.
+     *
+     * @param  int $userid The user ID.
+     * @return contextlist The list of context IDs.
+     */
+    public static function get_contexts_for_userid(int $userid): contextlist {
+        $sql = "SELECT ctx.id
+                  FROM {auth_neesgov_token} an
+                  JOIN {context} ctx ON ctx.instanceid = an.userid AND ctx.contextlevel = :contextlevel
+                 WHERE an.userid = :userid";
+        $params = ['userid' => $userid, 'contextlevel' => CONTEXT_USER];
+        $contextlist = new contextlist();
+        $contextlist->add_from_sql($sql, $params);
+
+        return $contextlist;
+    }
+
+    /**
+     *
+     * Nothing to export
+     *
+     * @param  approved_contextlist $contextlist The list of approved contexts for a user.
+     */
+    public static function export_user_data(approved_contextlist $contextlist) {
+    }
+
+    /**
      * This does the deletion of user data for the auth_neesgov.
      *
-     * @param  int $userid The user ID
+     * @param int $userid The user ID
      */
     protected static function delete_user_data(int $userid) {
         global $DB;
@@ -88,8 +126,5 @@ class privacy implements \core_privacy\local\metadata\provider {
         // Because we only use user contexts the instance ID is the user ID.
         $DB->delete_records('auth_neesgov_token', ['userid' => $userid]);
     }
-
-
-
 
 }
