@@ -70,7 +70,7 @@ class auth extends \auth_plugin_base {
             [
                 'url' => new \moodle_url('/auth/neesgov/login.php', $params),
                 'icon' => new pix_icon('neesgov', get_string('pluginname', 'auth_neesgov'), 'auth_neesgov'),
-                'name' => strip_tags(format_text(get_string('login_fail', 'auth_neesgov'))),
+                'name' => strip_tags(format_text(get_string('btn_gov_login', 'auth_neesgov'))),
             ],
         ];
     }

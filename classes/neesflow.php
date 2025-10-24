@@ -35,6 +35,13 @@ use auth_neesgov\event\neesgov_login;
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
  */
 class neesflow {
+
+    /**
+     * stores previous auth method
+     * @var string;
+     */
+    private $backtoauthmethod;
+
     /**
      * handle user login
      * @param object $userInfo {'id'=>$oidc->requestUserInfo('sub'),
@@ -58,6 +65,7 @@ class neesflow {
         }
 
         if ($mdluser->auth != 'neesgov') {// Change user auth type to neesgov.
+            $this->backtoauthmethod =  $mdluser->auth;
             $mdluser->auth = 'neesgov';
         }
 
@@ -134,8 +142,8 @@ class neesflow {
 
         $this->handlelogin($userinfo);
 
-        if ($authtypechange) { // If this conf is true, change auth type to manual after login with neesgov.
-            $USER->auth = 'manual';
+        if ($authtypechange) { // If this conf is true, change auth type to previous after login with neesgov.
+            $USER->auth = $this->backtoauthmethod;
             $DB->update_record('user', $USER); // Force manual auth change!
         }
 
