@@ -65,7 +65,7 @@ class neesflow {
         }
 
         if ($mdluser->auth != 'neesgov') {// Change user auth type to neesgov.
-            $this->backtoauthmethod =  $mdluser->auth;
+            $this->backtoauthmethod = $mdluser->auth;
             $mdluser->auth = 'neesgov';
         }
 
