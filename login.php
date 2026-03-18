@@ -24,9 +24,8 @@
  */
 
 require_once('../../config.php');
-
-require_once($CFG->dirroot."/auth/neesgov/classes/connect.php");
-require_once($CFG->dirroot."/auth/neesgov/classes/OpenIDConnectClient.php");
+require_once($CFG->dirroot . '/auth/neesgov/vendor/autoload.php');
+require_once($CFG->dirroot . "/auth/neesgov/classes/connect.php");
 
 use auth_neesgov\connect;
 use auth_neesgov\neesflow;
@@ -40,10 +39,13 @@ $PAGE->set_pagelayout('popup');
 
 $returnparams = ['wantsurl' => $wantsurl, 'sesskey' => sesskey()];
 
-$cn = new connect();
+if(!isloggedin()) {
+    $cn = new connect();
 
-$cn->openidauthenticate();
+    $cn->openidauthenticate();
 
-$neesflow = new neesflow();
+    $neesflow = new neesflow();
 
-$neesflow->handleredirect($cn->getuserinfo());
+    $neesflow->handleredirect($cn->getuserinfo());
+}
+redirect(new moodle_url('/login/index.php', ['loginredirect'=>1]));

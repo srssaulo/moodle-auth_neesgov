@@ -1,0 +1,55 @@
+############################
+# Composer
+############################
+#/vendor/
+composer.phar
+#composer.lock
+
+# Opcional: se quiser versionar o lock, comente a linha acima
+# !composer.lock
+
+############################
+# IDEs
+############################
+
+# VS Code
+.vscode/
+
+# JetBrains (PhpStorm, IntelliJ IDEA, etc)
+.idea/
+*.iml
+
+############################
+# Sistema operacional
+############################
+
+# Linux
+*~
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+############################
+# Arquivos de ambiente
+############################
+.env
+.env.*
+!.env.example
+
+############################
+# PHPUnit / Testes
+############################
+/phpunit.xml
+/phpunit.xml.dist
+/.phpunit.result.cache
+
+############################
+# Build / Dist
+############################
+/build/
+/dist/

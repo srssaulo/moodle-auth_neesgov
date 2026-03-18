@@ -25,6 +25,7 @@
 namespace auth_neesgov;
 
 use Exception;
+use Jumbojett\OpenIDConnectClient;
 
 /**
  * <https://manual-roteiro-integracao-login-unico.servicos.gov.br/pt/stable/arquivos/ExemploIntegracaoGovBr.java>

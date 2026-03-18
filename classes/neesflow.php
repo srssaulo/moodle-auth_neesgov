@@ -53,6 +53,8 @@ class neesflow {
     private function handlelogin($userinfo) {
         global $DB, $CFG, $USER;
 
+        $updateflag = false;
+
         // Do not continue if auth plugin is not enabled.
         if (!is_enabled_auth('neesgov')) {
             throw new moodle_exception('erroroidcnotenabled', 'auth_neesgov', null, null, '1');
@@ -77,7 +79,7 @@ class neesflow {
 
         // Updating first and last name gov.br.
         $govfirstname = strtok($userinfo->name, " ");
-        $govlastname = strtok(null);
+        $govlastname = strtok("");
 
         if ($mdluser->firstname != $govfirstname) {
             $mdluser->firstname = $govfirstname;
@@ -169,7 +171,7 @@ class neesflow {
         }
 
         // Its all right and user is redirected to dashboard Moodle.
-        redirect(new \moodle_url('/my'));
+        redirect(new \moodle_url('/'));
     }
 
 }
