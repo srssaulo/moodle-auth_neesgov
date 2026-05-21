@@ -78,20 +78,24 @@ class neesflow {
             $updateflag = true;
         }
 
-        // Updating first and last name gov.br - ex: jose renato milanez
-        $govfirstname = trim(substr($userinfo->name, 0, strpos($userinfo->name, ' '))); // ex: jose
-        $govlastname = trim(substr($userinfo->name, strpos($userinfo->name, ' '), strlen($userinfo->name))); // ex: renato milanez        
+		// Updating first and last name gov.br - ex: jose renato milanez
+		if ($userinfo->alternatename == "") {
+			$govfirstname = trim ( substr ( $userinfo->name, 0, strpos ( $userinfo->name, ' ' ) ) ); // ex: jose
+			$govlastname = trim ( substr ( $userinfo->name, strpos ( $userinfo->name, ' ' ), strlen ( $userinfo->name ) ) ); // ex: renato milanez
+		} else {
+			$govfirstname = trim ( substr ( $userinfo->alternatename, 0, strpos ( $userinfo->alternatename, ' ' ) ) ); // ex: jose
+			$govlastname = trim ( substr ( $userinfo->alternatename, strpos ( $userinfo->alternatename, ' ' ), strlen ( $userinfo->alternatename ) ) ); // ex: renato milanez
+		}
+		if ($mdluser->firstname != $govfirstname) {
+			$mdluser->firstname = $govfirstname;
+			$updateflag = true;
+		}
+		if ($mdluser->lastname != $govlastname) {
+			$mdluser->lastname = $govlastname;
+			$updateflag = true;
+		}        
 
-        if ($mdluser->firstname != $govfirstname) {
-            $mdluser->firstname = $govfirstname;
-            $updateflag = true;
-        }
-        if ($mdluser->lastname != $govlastname) {
-            $mdluser->lastname = $govlastname;
-            $updateflag = true;
-        }
-
-        if ($mdluser->alternatename != $userinfo->alternatename) {
+        if (($userinfo->alternatename != "") && $mdluser->alternatename != $userinfo->alternatename) {
             $mdluser->alternatename = $userinfo->alternatename;
             $updateflag = true;
         }
