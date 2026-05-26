@@ -71,4 +71,9 @@ if ($ADMIN->fulltree) {
         get_string('create_new_user', 'auth_neesgov'),
         get_string('create_new_user_desc', 'auth_neesgov'),
         1));
+    
+    $settings->add(new admin_setting_configcheckbox('auth_neesgov/update_email',
+        get_string('update_email', 'auth_neesgov'),
+        get_string('update_email_desc', 'auth_neesgov'),
+        1));
 }

@@ -144,8 +144,9 @@ class connect {
         if (!$mdluserexists) {
             if ($env['CREATE_NEW_USER']) { // Create a new user with neesgov auth .
 
-                $govfirstname = strtok($this->userinfo->name, " ");
-                $govlastname = strtok(null);
+                // Updating first and last name gov.br - ex: jose renato milanez
+                $govfirstname = trim(substr($this->userinfo->name, 0, strpos($this->userinfo->name, ' '))); // ex: jose
+                $govlastname = trim(substr($this->userinfo->name, strpos($this->userinfo->name, ' '), strlen($this->userinfo->name))); // ex: renato milanez
 
                 $usercreatobject = (object)[
                     'username' => $this->userinfo->id,

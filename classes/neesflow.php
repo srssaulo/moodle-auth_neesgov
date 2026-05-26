@@ -63,6 +63,8 @@ class neesflow {
         if (!$mdluser) {
             redirect($CFG->wwwroot . '/auth/neesgov/logout.php?pass=1', get_string('user_not_registred', 'auth_neesgov'), 3);
         }
+        
+        $updateflag = false;
 
         if ($mdluser->auth != 'neesgov') {// Change user auth type to neesgov.
             $this->backtoauthmethod = $mdluser->auth;
@@ -70,30 +72,35 @@ class neesflow {
             $updateflag = true;
         }
 
-        if ($userinfo->email != $mdluser->email) { // User\'s email update.
+        // Update user e-mail if desirable
+        if(get_config('auth_neesgov', 'update_email')) {
             $mdluser->email = $userinfo->email;
             $updateflag = true;
         }
 
-        // Updating first and last name gov.br.
-        $govfirstname = strtok($userinfo->name, " ");
-        $govlastname = strtok(null);
+		// Updating first and last name gov.br - ex: jose renato milanez
+		if ($userinfo->alternatename == "") {
+			$govfirstname = trim ( substr ( $userinfo->name, 0, strpos ( $userinfo->name, ' ' ) ) ); // ex: jose
+			$govlastname = trim ( substr ( $userinfo->name, strpos ( $userinfo->name, ' ' ), strlen ( $userinfo->name ) ) ); // ex: renato milanez
+		} else {
+			$govfirstname = trim ( substr ( $userinfo->alternatename, 0, strpos ( $userinfo->alternatename, ' ' ) ) ); // ex: jose
+			$govlastname = trim ( substr ( $userinfo->alternatename, strpos ( $userinfo->alternatename, ' ' ), strlen ( $userinfo->alternatename ) ) ); // ex: renato milanez
+		}
+		if ($mdluser->firstname != $govfirstname) {
+			$mdluser->firstname = $govfirstname;
+			$updateflag = true;
+		}
+		if ($mdluser->lastname != $govlastname) {
+			$mdluser->lastname = $govlastname;
+			$updateflag = true;
+		}        
 
-        if ($mdluser->firstname != $govfirstname) {
-            $mdluser->firstname = $govfirstname;
-            $updateflag = true;
-        }
-        if ($mdluser->lastname != $govlastname) {
-            $mdluser->lastname = $govlastname;
-            $updateflag = true;
-        }
-
-        if ($mdluser->alternatename != $userinfo->alternatename) {
+        if (($userinfo->alternatename != "") && $mdluser->alternatename != $userinfo->alternatename) {
             $mdluser->alternatename = $userinfo->alternatename;
             $updateflag = true;
         }
 
-        if ($mdluser->phone1 != $userinfo->phone1) {
+        if (($userinfo->phone1 != "") && ($mdluser->phone1 != $userinfo->phone1)) {
             $mdluser->phone1 = $userinfo->phone1;
             $updateflag = true;
         }
