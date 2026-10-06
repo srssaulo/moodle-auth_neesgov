@@ -30,7 +30,11 @@ require_once($CFG->dirroot . "/auth/neesgov/classes/connect.php");
 use auth_neesgov\connect;
 use auth_neesgov\neesflow;
 
-$wantsurl = new moodle_url(optional_param('wantsurl', '', PARAM_URL));
+$wantsurl = $SESSION->wantsurl;
+
+if (!$wantsurl) {
+    $wantsurl = new moodle_url(optional_param('wantsurl', '', PARAM_URL));
+}
 
 $PAGE->set_context(context_system::instance());
 

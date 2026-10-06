@@ -35,7 +35,6 @@ require_once($CFG->libdir . '/authlib.php');
  * main auth class
  */
 class auth extends \auth_plugin_base {
-
     /**
      * Returns true if this authentication plugin is "internal".
      *
@@ -64,7 +63,7 @@ class auth extends \auth_plugin_base {
      * @throws \core\exception\moodle_exception
      */
     public function loginpage_idp_list($wantsurl) {
-        $params = ['sesskey' => sesskey()];
+        $params = ['sesskey' => sesskey(), 'wantsurl' => $wantsurl];
 
         return [
             [
@@ -116,5 +115,4 @@ class auth extends \auth_plugin_base {
             $redirect = $CFG->wwwroot . '/auth/neesgov/logout.php?pass=1';
         }
     }
-
 }

@@ -148,7 +148,7 @@ class neesflow {
      * @throws \moodle_exception
      */
     public function handleredirect($userinfo) {
-        global $DB, $USER;
+        global $DB, $USER, $CFG;
 
         $authtypechange = get_config('auth_neesgov', 'auth_type_change');
 
@@ -170,8 +170,7 @@ class neesflow {
             }
         }
 
-        // Its all right and user is redirected to dashboard Moodle.
-        redirect(new \moodle_url('/'));
+        require_once($CFG->dirroot . '/login/lib.php');
+        redirect(core_login_get_return_url());
     }
-
 }
